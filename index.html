@@ -21,14 +21,17 @@
     display:flex; align-items:center; justify-content:center; padding:20px;
   }
   .app{width:100%; max-width:720px}
-  header{display:flex; align-items:center; gap:12px; margin-bottom:16px}
+
+  /* BRAND (логотип над названием, всё по центру) */
+  .brand{display:grid; place-items:center; gap:12px; margin-bottom:16px; text-align:center}
   .logo{
-    width:44px;height:44px;border-radius:12px;
+    width:68px;height:68px;border-radius:20px;
     background:linear-gradient(135deg,var(--pink1),var(--pink2));
-    display:grid;place-items:center;color:#fff;font-weight:800;letter-spacing:.3px;
+    box-shadow:0 10px 30px rgba(255,79,163,.25), 0 6px 18px rgba(0,0,0,.35);
+    display:grid;place-items:center;color:#fff;font-weight:900;letter-spacing:.3px;
   }
-  .logo span{font-size:12px;line-height:1;text-align:center}
-  h1{margin:0;font-size:20px}
+  .logo span{font-size:12px;line-height:1.05;text-align:center}
+  h1{margin:0;font-size:clamp(18px,4.5vw,22px); letter-spacing:.4px}
 
   .panel{
     background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(0,0,0,.15)),var(--panel);
@@ -72,7 +75,7 @@
 </head>
 <body>
   <div class="app">
-    <header>
+    <header class="brand">
       <div class="logo"><span>PUSIK<br/>GAME</span></div>
       <h1>PUSIK GAME</h1>
     </header>
@@ -142,18 +145,15 @@ function generate(){
   const category = pickCategory();
   const task = pickTask(category) || { text:'Задание' };
 
-  // показать карточку
   card.hidden = false;
   catBadge.className = `cat ${category}`;
   catBadge.querySelector('.dot').className = `dot ${category}`;
   catLabel.textContent = category==='white'?'Белая':category==='orange'?'Оранжевая':'Чёрная';
 
-  // скрыть/обновить текст задания
   reveal.setAttribute('aria-expanded','false');
   taskText.hidden = true;
   taskText.textContent = task.text;
 
-  // переключить текст кнопки
   actionBtn.textContent = 'Сгенерить новое задание';
 }
 
