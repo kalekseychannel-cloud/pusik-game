@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <style>
   :root{
-    --bg:#0f0d12; --panel:#141218; --text:#fff6fb; --border:#2a2430;
+    --bg:#0f0d12; --panel:#141218; --text:#fff6fb; --muted:#ffd7eb; --border:#2a2430;
     --pink1:#ff7ab6; --pink2:#ff4fa3;
   }
   *{box-sizing:border-box}
@@ -18,26 +18,33 @@
       radial-gradient(900px 600px at 80% -10%, rgba(255,122,182,.20), transparent 60%),
       radial-gradient(800px 500px at -10% 110%, rgba(255,79,163,.18), transparent 60%),
       var(--bg);
-    display:flex; align-items:center; justify-content:center; padding:20px;
+    display:flex; align-items:flex-start; justify-content:center; padding:24px;
   }
   .app{width:100%; max-width:720px}
 
-  /* BRAND (логотип над названием, всё по центру) */
-  .brand{display:grid; place-items:center; gap:12px; margin-bottom:16px; text-align:center}
+  /* BRAND — центрировано: логотип над названием */
+  .brand{display:flex; flex-direction:column; align-items:center; gap:12px; text-align:center; margin-bottom:16px}
   .logo{
     width:68px;height:68px;border-radius:20px;
     background:linear-gradient(135deg,var(--pink1),var(--pink2));
     box-shadow:0 10px 30px rgba(255,79,163,.25), 0 6px 18px rgba(0,0,0,.35);
     display:grid;place-items:center;color:#fff;font-weight:900;letter-spacing:.3px;
   }
-  .logo span{font-size:12px;line-height:1.05;text-align:center}
+  .logo span{font-size:12px;line-height:1.05}
   h1{margin:0;font-size:clamp(18px,4.5vw,22px); letter-spacing:.4px}
 
+  /* Панель и кнопки */
   .panel{
     background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(0,0,0,.15)),var(--panel);
     border:1px solid var(--border); border-radius:16px; padding:16px;
     box-shadow:0 10px 30px rgba(0,0,0,.35);
   }
+  .tabs{display:flex; gap:8px; margin-bottom:12px}
+  .tab{
+    flex:1; text-align:center; padding:10px 12px; border-radius:12px; cursor:pointer;
+    border:1px solid var(--border); background:#17131b; font-weight:800;
+  }
+  .tab[aria-selected="true"]{background:linear-gradient(135deg,var(--pink1),var(--pink2)); border-color:transparent}
 
   button{
     appearance:none;border:1px solid var(--border);background:#17131b;color:var(--text);
@@ -45,8 +52,10 @@
     transition:.15s transform ease, .15s background ease, .15s opacity ease;
   }
   button:hover{transform:translateY(-1px)}
+  button:disabled{opacity:.6;cursor:not-allowed;transform:none}
   .primary{background:linear-gradient(135deg,var(--pink1),var(--pink2)); border-color:transparent;}
 
+  /* Карточка и элементы */
   .card{border:1px solid var(--border); border-radius:14px; padding:14px; background:#120f15; margin-top:12px;}
   .card-head{display:flex; align-items:center; justify-content:space-between; gap:10px;}
   .cat{display:inline-flex;align-items:center;gap:8px;font-weight:800;font-size:14px;
@@ -71,6 +80,21 @@
   .reveal[aria-expanded="true"] .chev{transform:rotate(90deg)}
   .task{margin-top:10px;border-top:1px dashed #2a2430; padding-top:12px;}
   .task[hidden]{display:none}
+
+  .actions{display:grid; gap:10px; margin-top:12px;}
+  .sticky-confirm{position:sticky; bottom:0; background:transparent; padding-top:8px}
+
+  /* История */
+  .history-group{margin-top:8px}
+  .week-title{font-weight:800; opacity:.85; margin:6px 4px 8px}
+  details{border:1px solid var(--border); border-radius:12px; background:#17131b; margin:8px 0; overflow:hidden}
+  summary{list-style:none; cursor:pointer; padding:12px 14px; display:flex; align-items:center; justify-content:space-between; gap:10px}
+  summary::-webkit-details-marker{display:none}
+  .d-title{display:flex; align-items:center; gap:8px; font-weight:800}
+  .d-dot{width:8px; height:8px; border-radius:999px}
+  .d-dot.white{background:#ffe9ff} .d-dot.orange{background:#ffb077} .d-dot.black{background:#ff4fa3}
+  .d-text{padding:0 14px 14px; color:var(--muted)}
+  .empty{opacity:.7; padding:6px}
 </style>
 </head>
 <body>
@@ -81,30 +105,51 @@
     </header>
 
     <section class="panel" aria-live="polite">
-      <button id="actionBtn" class="primary">Выбрать задание</button>
+      <!-- Tabs -->
+      <nav class="tabs" role="tablist">
+        <button id="tab-new"  class="tab" role="tab" aria-selected="true">Новое задание</button>
+        <button id="tab-history" class="tab" role="tab" aria-selected="false">История</button>
+      </nav>
 
-      <article id="card" class="card" hidden>
-        <div class="card-head">
-          <div class="cat" id="catBadge">
-            <span class="dot"></span>
-            <span id="catLabel">—</span>
+      <!-- Новое задание -->
+      <div id="view-new" role="tabpanel">
+        <button id="btnGenerate" class="primary">Выбрать задание</button>
+
+        <article id="card" class="card" hidden>
+          <div class="card-head">
+            <div class="cat" id="catBadge">
+              <span class="dot"></span>
+              <span id="catLabel">—</span>
+            </div>
+            <span id="badgeToday" class="badge" hidden>на сегодня выбрано</span>
           </div>
-          <span class="badge">на сегодня выбрано</span>
-        </div>
 
-        <div id="reveal" class="reveal" role="button" tabindex="0" aria-expanded="false" aria-controls="taskText">
-          <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M9 6l6 6-6 6" stroke="#ffd7eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          <strong>Показать / скрыть задание</strong>
+          <div id="reveal" class="reveal" role="button" tabindex="0" aria-expanded="false" aria-controls="taskText">
+            <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M9 6l6 6-6 6" stroke="#ffd7eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <strong>Показать / скрыть задание</strong>
+          </div>
+          <div id="taskText" class="task" hidden></div>
+
+          <div class="actions sticky-confirm">
+            <button id="btnConfirm" class="primary" hidden>Выбираю это задание</button>
+          </div>
+        </article>
+      </div>
+
+      <!-- История -->
+      <div id="view-history" role="tabpanel" hidden>
+        <div class="history-group">
+          <div class="week-title">Эта неделя</div>
+          <div id="historyList"></div>
         </div>
-        <div id="taskText" class="task" hidden></div>
-      </article>
+      </div>
     </section>
   </div>
 
 <script>
-/* ===== Контент (пример) — добавь свои тексты ===== */
+/* ===== ДАННЫЕ (пример) — замени своими заданиями при необходимости ===== */
 const CARDS = {
   white: [
     { id:'w1', text:'Белая #1 — Напишите друг другу три тёплых комплимента.' },
@@ -129,41 +174,174 @@ const CARDS = {
   ]
 };
 
-const $ = (id)=>document.getElementById(id);
-const actionBtn = $('actionBtn');
-const card = $('card');
-const catBadge = $('catBadge');
-const catLabel = $('catLabel');
-const taskText = $('taskText');
-const reveal = $('reveal');
-
-function rnd(arr){ return arr[Math.floor(Math.random()*arr.length)] }
-function pickCategory(){ return rnd(['white','orange','black']); }
-function pickTask(category){ return rnd(CARDS[category]||[]); }
-
-function generate(){
-  const category = pickCategory();
-  const task = pickTask(category) || { text:'Задание' };
-
-  card.hidden = false;
-  catBadge.className = `cat ${category}`;
-  catBadge.querySelector('.dot').className = `dot ${category}`;
-  catLabel.textContent = category==='white'?'Белая':category==='orange'?'Оранжевая':'Чёрная';
-
-  reveal.setAttribute('aria-expanded','false');
-  taskText.hidden = true;
-  taskText.textContent = task.text;
-
-  actionBtn.textContent = 'Сгенерить новое задание';
+/* ===== УТИЛИТЫ ДАТЫ ===== */
+const dowRU = ['ВС','ПН','ВТ','СР','ЧТ','ПТ','СБ']; // 0..6
+const pad = (n)=>String(n).padStart(2,'0');
+const todayKey = ()=>{ const d=new Date(); return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`; };
+function mondayOfWeek(d=new Date()){
+  const x = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+  const day = x.getDay(); // 0=Вс..6=Сб
+  const diff = (day===0? -6 : 1 - day); // к понедельнику
+  x.setDate(x.getDate()+diff);
+  return `${x.getFullYear()}-${pad(x.getMonth()+1)}-${pad(x.getDate())}`;
+}
+function formatDowLabel(isoDate){
+  const d = new Date(isoDate+'T00:00:00');
+  const w = dowRU[d.getDay()];
+  return (isoDate===todayKey()) ? 'Сегодня' : w;
 }
 
-actionBtn.addEventListener('click', generate);
-reveal.addEventListener('click', () => {
+/* ===== СОСТОЯНИЕ/ХРАНИЛИЩЕ ===== */
+const STORAGE_KEY = 'pusik_game_state_v3';
+const DEFAULT_STATE = () => ({
+  date: todayKey(),
+  weekStart: mondayOfWeek(),
+  today: null,           // подтверждённое задание: {category, taskId}
+  preview: null,         // сгенерированное, но ещё не подтверждено
+  history: []            // [{date, category, taskId}]
+});
+const loadState = () => { try{ return Object.assign(DEFAULT_STATE(), JSON.parse(localStorage.getItem(STORAGE_KEY)||'{}')); }catch{ return DEFAULT_STATE(); } };
+const saveState = (s)=>localStorage.setItem(STORAGE_KEY, JSON.stringify(s));
+
+function rollDates(state){
+  const nowDate = todayKey();
+  const nowWeek = mondayOfWeek();
+  if(state.weekStart !== nowWeek){
+    state.weekStart = nowWeek;
+    state.history = []; // новая неделя — обнуляем
+  }
+  if(state.date !== nowDate){
+    state.date = nowDate;
+    state.today = null;     // новый день — снова можно выбирать
+    state.preview = null;
+  }
+  return state;
+}
+
+/* ===== ВСПОМОГАТЕЛЬНОЕ ===== */
+const rnd = (arr)=>arr[Math.floor(Math.random()*arr.length)];
+function pickCategory(){ return rnd(['white','orange','black']); }
+function pickTask(category){ return rnd(CARDS[category]||[]); }
+function getTask(cat,id){ return (CARDS[cat]||[]).find(x=>x.id===id)||null; }
+
+/* ===== ССЫЛКИ НА ЭЛЕМЕНТЫ ===== */
+const $ = (id)=>document.getElementById(id);
+const tabNew = $('tab-new'), tabHist = $('tab-history');
+const viewNew = $('view-new'), viewHist = $('view-history');
+const btnGenerate = $('btnGenerate'), btnConfirm = $('btnConfirm');
+const card = $('card'), catBadge = $('catBadge'), catLabel = $('catLabel'), badgeToday = $('badgeToday');
+const reveal = $('reveal'), taskText = $('taskText');
+const historyList = $('historyList');
+
+/* ===== ЛОГИКА ОТОБРАЖЕНИЯ ===== */
+let state = rollDates(loadState()); saveState(state); renderAll();
+
+function renderAll(){
+  renderNew();
+  renderHistory();
+}
+
+function renderNew(){
+  // состояние кнопок и карточки
+  const hasConfirmed = !!state.today;
+  const current = state.preview || state.today;
+
+  // верхняя кнопка
+  if (hasConfirmed){
+    btnGenerate.disabled = true;
+    btnGenerate.textContent = 'Выбрано для сегодня';
+  } else {
+    btnGenerate.disabled = false;
+    btnGenerate.textContent = state.preview ? 'Сгенерить новое задание' : 'Выбрать задание';
+  }
+
+  // карточка
+  if (current){
+    card.hidden = false;
+    const cat = current.category;
+    const task = getTask(cat, current.taskId);
+    catBadge.className = `cat ${cat}`;
+    catBadge.querySelector('.dot').className = `dot ${cat}`;
+    catLabel.textContent = cat==='white'?'Белая':cat==='orange'?'Оранжевая':'Чёрная';
+    taskText.textContent = task ? task.text : 'Задание';
+    badgeToday.hidden = !hasConfirmed;
+
+    // показать/скрыть кнопку подтверждения
+    btnConfirm.hidden = hasConfirmed || !state.preview;
+  } else {
+    card.hidden = true;
+    btnConfirm.hidden = true;
+  }
+}
+
+function renderHistory(){
+  // показываем записи этой недели в порядке убывания даты (сегодня сверху)
+  const list = [...state.history].sort((a,b)=> (a.date < b.date ? 1 : -1));
+  // если на сегодня подтверждено — убедимся, что запись есть/обновлена
+  if (state.today){
+    const idx = list.findIndex(x=>x.date===state.date);
+    const rec = { date: state.date, category: state.today.category, taskId: state.today.taskId };
+    if (idx>=0) list[idx]=rec; else list.unshift(rec);
+  }
+
+  if (list.length===0){
+    historyList.innerHTML = `<div class="empty">Пока пусто.</div>`;
+    return;
+  }
+
+  historyList.innerHTML = list.map(entry=>{
+    const task = getTask(entry.category, entry.taskId);
+    const label = formatDowLabel(entry.date);
+    const dot = entry.category;
+    const text = task ? task.text : 'Задание';
+    return `
+    <details>
+      <summary>
+        <span class="d-title"><span class="d-dot ${dot}"></span>${label}</span>
+        <span>${entry.category==='white'?'Белая':entry.category==='orange'?'Оранжевая':'Чёрная'}</span>
+      </summary>
+      <div class="d-text">${text}</div>
+    </details>`;
+  }).join('');
+}
+
+/* ===== ОБРАБОТЧИКИ ===== */
+tabNew.addEventListener('click', ()=>{ tabNew.setAttribute('aria-selected','true'); tabHist.setAttribute('aria-selected','false'); viewNew.hidden=false; viewHist.hidden=true; });
+tabHist.addEventListener('click', ()=>{ tabNew.setAttribute('aria-selected','false'); tabHist.setAttribute('aria-selected','true'); viewNew.hidden=true; viewHist.hidden=false; });
+
+btnGenerate.addEventListener('click', ()=>{
+  if (state.today) return; // сегодня уже зафиксировано
+  const category = pickCategory();
+  const task = pickTask(category) || { id:'tmp', text:'Задание' };
+  state.preview = { category, taskId: task.id };
+  saveState(state); renderAll();
+});
+
+$('reveal').addEventListener('click', ()=>{
   const open = reveal.getAttribute('aria-expanded')==='true';
   reveal.setAttribute('aria-expanded', String(!open));
   taskText.hidden = open;
 });
-reveal.addEventListener('keydown', (e)=>{ if(e.key===' '||e.key==='Enter'){ e.preventDefault(); reveal.click(); }});
+$('reveal').addEventListener('keydown', (e)=>{ if(e.key===' '||e.key==='Enter'){ e.preventDefault(); $('reveal').click(); }});
+
+btnConfirm.addEventListener('click', ()=>{
+  if (!state.preview) return;
+  // фиксируем выбор на сегодня
+  state.today = { ...state.preview };
+  // обновляем/добавляем запись в историю текущей недели
+  const idx = state.history.findIndex(x=>x.date===state.date);
+  const rec = { date: state.date, category: state.today.category, taskId: state.today.taskId };
+  if (idx>=0) state.history[idx]=rec; else state.history.push(rec);
+  state.preview = null;
+  saveState(state); renderAll();
+});
+
+/* Ночной авто-ресет, плюс смена недели */
+setInterval(()=>{
+  const before = state.date + '|' + state.weekStart;
+  state = rollDates(state);
+  if (before !== state.date + '|' + state.weekStart){ saveState(state); renderAll(); }
+}, 60*1000);
 </script>
 </body>
 </html>
