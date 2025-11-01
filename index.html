@@ -22,7 +22,7 @@
   }
   .app{width:100%; max-width:720px}
 
-  /* BRAND — центрировано: логотип над названием */
+  /* BRAND */
   .brand{display:flex; flex-direction:column; align-items:center; gap:12px; text-align:center; margin-bottom:16px}
   .logo{
     width:68px;height:68px;border-radius:20px;
@@ -33,7 +33,7 @@
   .logo span{font-size:12px;line-height:1.05}
   h1{margin:0;font-size:clamp(18px,4.5vw,22px); letter-spacing:.4px}
 
-  /* Панель и кнопки */
+  /* Панель/кнопки */
   .panel{
     background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(0,0,0,.15)),var(--panel);
     border:1px solid var(--border); border-radius:16px; padding:16px;
@@ -55,7 +55,7 @@
   button:disabled{opacity:.6;cursor:not-allowed;transform:none}
   .primary{background:linear-gradient(135deg,var(--pink1),var(--pink2)); border-color:transparent;}
 
-  /* Карточка и элементы */
+  /* Карточка */
   .card{border:1px solid var(--border); border-radius:14px; padding:14px; background:#120f15; margin-top:12px;}
   .card-head{display:flex; align-items:center; justify-content:space-between; gap:10px;}
   .cat{display:inline-flex;align-items:center;gap:8px;font-weight:800;font-size:14px;
@@ -90,9 +90,12 @@
   details{border:1px solid var(--border); border-radius:12px; background:#17131b; margin:8px 0; overflow:hidden}
   summary{list-style:none; cursor:pointer; padding:12px 14px; display:flex; align-items:center; justify-content:space-between; gap:10px}
   summary::-webkit-details-marker{display:none}
-  .d-title{display:flex; align-items:center; gap:8px; font-weight:800}
+  .sum-left{display:flex; align-items:center; gap:8px; font-weight:800}
   .d-dot{width:8px; height:8px; border-radius:999px}
   .d-dot.white{background:#ffe9ff} .d-dot.orange{background:#ffb077} .d-dot.black{background:#ff4fa3}
+  .sum-right{display:flex; align-items:center; gap:10px}
+  .chevH{width:16px;height:16px;opacity:.85;transition:transform .15s ease}
+  details[open] .chevH{transform:rotate(90deg)}
   .d-text{padding:0 14px 14px; color:var(--muted)}
   .empty{opacity:.7; padding:6px}
 </style>
@@ -149,7 +152,7 @@
   </div>
 
 <script>
-/* ===== ДАННЫЕ (пример) — замени своими заданиями при необходимости ===== */
+/* ===== ДАННЫЕ (пример) ===== */
 const CARDS = {
   white: [
     { id:'w1', text:'Белая #1 — Напишите друг другу три тёплых комплимента.' },
@@ -174,57 +177,47 @@ const CARDS = {
   ]
 };
 
-/* ===== УТИЛИТЫ ДАТЫ ===== */
-const dowRU = ['ВС','ПН','ВТ','СР','ЧТ','ПТ','СБ']; // 0..6
+/* ===== ДАТЫ ===== */
+const dowRU = ['ВС','ПН','ВТ','СР','ЧТ','ПТ','СБ'];
 const pad = (n)=>String(n).padStart(2,'0');
 const todayKey = ()=>{ const d=new Date(); return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`; };
 function mondayOfWeek(d=new Date()){
   const x = new Date(d.getFullYear(), d.getMonth(), d.getDate());
-  const day = x.getDay(); // 0=Вс..6=Сб
-  const diff = (day===0? -6 : 1 - day); // к понедельнику
+  const day = x.getDay(); const diff = (day===0? -6 : 1 - day);
   x.setDate(x.getDate()+diff);
   return `${x.getFullYear()}-${pad(x.getMonth()+1)}-${pad(x.getDate())}`;
 }
 function formatDowLabel(isoDate){
-  const d = new Date(isoDate+'T00:00:00');
-  const w = dowRU[d.getDay()];
+  const d = new Date(isoDate+'T00:00:00'); const w = dowRU[d.getDay()];
   return (isoDate===todayKey()) ? 'Сегодня' : w;
 }
 
-/* ===== СОСТОЯНИЕ/ХРАНИЛИЩЕ ===== */
+/* ===== СОСТОЯНИЕ ===== */
 const STORAGE_KEY = 'pusik_game_state_v3';
 const DEFAULT_STATE = () => ({
   date: todayKey(),
   weekStart: mondayOfWeek(),
-  today: null,           // подтверждённое задание: {category, taskId}
-  preview: null,         // сгенерированное, но ещё не подтверждено
-  history: []            // [{date, category, taskId}]
+  today: null,     // подтверждённое {category, taskId}
+  preview: null,   // сгенерировано, но не подтверждено
+  history: []      // [{date, category, taskId}]
 });
 const loadState = () => { try{ return Object.assign(DEFAULT_STATE(), JSON.parse(localStorage.getItem(STORAGE_KEY)||'{}')); }catch{ return DEFAULT_STATE(); } };
 const saveState = (s)=>localStorage.setItem(STORAGE_KEY, JSON.stringify(s));
 
 function rollDates(state){
-  const nowDate = todayKey();
-  const nowWeek = mondayOfWeek();
-  if(state.weekStart !== nowWeek){
-    state.weekStart = nowWeek;
-    state.history = []; // новая неделя — обнуляем
-  }
-  if(state.date !== nowDate){
-    state.date = nowDate;
-    state.today = null;     // новый день — снова можно выбирать
-    state.preview = null;
-  }
+  const nowDate = todayKey(); const nowWeek = mondayOfWeek();
+  if(state.weekStart !== nowWeek){ state.weekStart = nowWeek; state.history = []; }
+  if(state.date !== nowDate){ state.date = nowDate; state.today = null; state.preview = null; }
   return state;
 }
 
-/* ===== ВСПОМОГАТЕЛЬНОЕ ===== */
+/* ===== УТИЛЫ ===== */
 const rnd = (arr)=>arr[Math.floor(Math.random()*arr.length)];
 function pickCategory(){ return rnd(['white','orange','black']); }
 function pickTask(category){ return rnd(CARDS[category]||[]); }
 function getTask(cat,id){ return (CARDS[cat]||[]).find(x=>x.id===id)||null; }
 
-/* ===== ССЫЛКИ НА ЭЛЕМЕНТЫ ===== */
+/* ===== DOM ===== */
 const $ = (id)=>document.getElementById(id);
 const tabNew = $('tab-new'), tabHist = $('tab-history');
 const viewNew = $('view-new'), viewHist = $('view-history');
@@ -233,102 +226,88 @@ const card = $('card'), catBadge = $('catBadge'), catLabel = $('catLabel'), badg
 const reveal = $('reveal'), taskText = $('taskText');
 const historyList = $('historyList');
 
-/* ===== ЛОГИКА ОТОБРАЖЕНИЯ ===== */
+/* ===== РЕНДЕР ===== */
 let state = rollDates(loadState()); saveState(state); renderAll();
 
-function renderAll(){
-  renderNew();
-  renderHistory();
-}
+function renderAll(){ renderNew(); renderHistory(); }
 
 function renderNew(){
-  // состояние кнопок и карточки
   const hasConfirmed = !!state.today;
   const current = state.preview || state.today;
 
-  // верхняя кнопка
   if (hasConfirmed){
-    btnGenerate.disabled = true;
-    btnGenerate.textContent = 'Выбрано для сегодня';
+    btnGenerate.disabled = true; btnGenerate.textContent = 'Выбрано для сегодня';
   } else {
     btnGenerate.disabled = false;
     btnGenerate.textContent = state.preview ? 'Сгенерить новое задание' : 'Выбрать задание';
   }
 
-  // карточка
   if (current){
     card.hidden = false;
-    const cat = current.category;
-    const task = getTask(cat, current.taskId);
+    const cat = current.category; const task = getTask(cat, current.taskId);
     catBadge.className = `cat ${cat}`;
     catBadge.querySelector('.dot').className = `dot ${cat}`;
     catLabel.textContent = cat==='white'?'Белая':cat==='orange'?'Оранжевая':'Чёрная';
     taskText.textContent = task ? task.text : 'Задание';
     badgeToday.hidden = !hasConfirmed;
-
-    // показать/скрыть кнопку подтверждения
     btnConfirm.hidden = hasConfirmed || !state.preview;
-  } else {
-    card.hidden = true;
-    btnConfirm.hidden = true;
-  }
+  } else { card.hidden = true; btnConfirm.hidden = true; }
 }
 
 function renderHistory(){
-  // показываем записи этой недели в порядке убывания даты (сегодня сверху)
   const list = [...state.history].sort((a,b)=> (a.date < b.date ? 1 : -1));
-  // если на сегодня подтверждено — убедимся, что запись есть/обновлена
   if (state.today){
     const idx = list.findIndex(x=>x.date===state.date);
     const rec = { date: state.date, category: state.today.category, taskId: state.today.taskId };
     if (idx>=0) list[idx]=rec; else list.unshift(rec);
   }
 
-  if (list.length===0){
-    historyList.innerHTML = `<div class="empty">Пока пусто.</div>`;
-    return;
-  }
+  if (list.length===0){ historyList.innerHTML = `<div class="empty">Пока пусто.</div>`; return; }
 
   historyList.innerHTML = list.map(entry=>{
     const task = getTask(entry.category, entry.taskId);
     const label = formatDowLabel(entry.date);
-    const dot = entry.category;
     const text = task ? task.text : 'Задание';
+    const catName = entry.category==='white'?'Белая':entry.category==='orange'?'Оранжевая':'Чёрная';
+    const dot = entry.category;
+    // все записи свёрнуты по умолчанию; chevron показывает, что можно раскрыть
     return `
     <details>
       <summary>
-        <span class="d-title"><span class="d-dot ${dot}"></span>${label}</span>
-        <span>${entry.category==='white'?'Белая':entry.category==='orange'?'Оранжевая':'Чёрная'}</span>
+        <span class="sum-left"><span class="d-dot ${dot}"></span>${label}</span>
+        <span class="sum-right"><span>${catName}</span>
+          <svg class="chevH" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M9 6l6 6-6 6" stroke="#ffd7eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
       </summary>
       <div class="d-text">${text}</div>
     </details>`;
   }).join('');
 }
 
-/* ===== ОБРАБОТЧИКИ ===== */
+/* ===== События ===== */
 tabNew.addEventListener('click', ()=>{ tabNew.setAttribute('aria-selected','true'); tabHist.setAttribute('aria-selected','false'); viewNew.hidden=false; viewHist.hidden=true; });
 tabHist.addEventListener('click', ()=>{ tabNew.setAttribute('aria-selected','false'); tabHist.setAttribute('aria-selected','true'); viewNew.hidden=true; viewHist.hidden=false; });
 
 btnGenerate.addEventListener('click', ()=>{
-  if (state.today) return; // сегодня уже зафиксировано
+  if (state.today) return;
   const category = pickCategory();
   const task = pickTask(category) || { id:'tmp', text:'Задание' };
   state.preview = { category, taskId: task.id };
   saveState(state); renderAll();
 });
 
-$('reveal').addEventListener('click', ()=>{
+reveal.addEventListener('click', ()=>{
   const open = reveal.getAttribute('aria-expanded')==='true';
   reveal.setAttribute('aria-expanded', String(!open));
   taskText.hidden = open;
 });
-$('reveal').addEventListener('keydown', (e)=>{ if(e.key===' '||e.key==='Enter'){ e.preventDefault(); $('reveal').click(); }});
+reveal.addEventListener('keydown', (e)=>{ if(e.key===' '||e.key==='Enter'){ e.preventDefault(); reveal.click(); }});
 
 btnConfirm.addEventListener('click', ()=>{
   if (!state.preview) return;
-  // фиксируем выбор на сегодня
   state.today = { ...state.preview };
-  // обновляем/добавляем запись в историю текущей недели
   const idx = state.history.findIndex(x=>x.date===state.date);
   const rec = { date: state.date, category: state.today.category, taskId: state.today.taskId };
   if (idx>=0) state.history[idx]=rec; else state.history.push(rec);
@@ -336,7 +315,7 @@ btnConfirm.addEventListener('click', ()=>{
   saveState(state); renderAll();
 });
 
-/* Ночной авто-ресет, плюс смена недели */
+/* Ночной авто-ресет и смена недели */
 setInterval(()=>{
   const before = state.date + '|' + state.weekStart;
   state = rollDates(state);
