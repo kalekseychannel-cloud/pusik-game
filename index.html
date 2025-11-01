@@ -1,4 +1,3 @@
-```html
 <!doctype html>
 <html lang="ru">
 <head>
@@ -6,87 +5,50 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>PUSIK GAME</title>
 <meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-status-bar-style" content="default" />
 <style>
   :root{
-    --bg:#0f0d12;
-    --panel:#141218;
-    --text:#fff6fb;
-    --muted:#ffd7eb;
-    --border:#2a2430;
-    --accent-pink:#ff7ab6;
-    --accent-pink-2:#ff4fa3;
-    --white-bg:#1b1820;
-    --orange-bg:#21171a;
-    --black-bg:#100e12;
+    --bg:#0f0d12; --panel:#141218; --text:#fff6fb; --border:#2a2430;
+    --pink1:#ff7ab6; --pink2:#ff4fa3;
   }
   *{box-sizing:border-box}
   html,body{height:100%}
   body{
-    margin:0;
-    font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
-    color:var(--text);
+    margin:0; font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif; color:var(--text);
     background:
       radial-gradient(900px 600px at 80% -10%, rgba(255,122,182,.20), transparent 60%),
       radial-gradient(800px 500px at -10% 110%, rgba(255,79,163,.18), transparent 60%),
       var(--bg);
     display:flex; align-items:center; justify-content:center; padding:20px;
   }
-  .app{width:100%; max-width:780px}
-  header{
-    display:flex; align-items:center; gap:12px; margin-bottom:16px;
-  }
+  .app{width:100%; max-width:720px}
+  header{display:flex; align-items:center; gap:12px; margin-bottom:16px}
   .logo{
     width:44px;height:44px;border-radius:12px;
-    background:linear-gradient(135deg,var(--accent-pink),var(--accent-pink-2));
-    display:grid;place-items:center;
-    color:white;font-weight:800;letter-spacing:.5px;
+    background:linear-gradient(135deg,var(--pink1),var(--pink2));
+    display:grid;place-items:center;color:#fff;font-weight:800;letter-spacing:.3px;
   }
   .logo span{font-size:12px;line-height:1;text-align:center}
   h1{margin:0;font-size:20px}
-  .tiny{color:var(--muted);font-size:12px}
+
   .panel{
     background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(0,0,0,.15)),var(--panel);
     border:1px solid var(--border); border-radius:16px; padding:16px;
     box-shadow:0 10px 30px rgba(0,0,0,.35);
   }
-  .row{display:grid;grid-template-columns:1fr;gap:16px}
-  @media(min-width:860px){.row{grid-template-columns:1.2fr .8fr}}
 
-  /* Buttons */
   button{
     appearance:none;border:1px solid var(--border);background:#17131b;color:var(--text);
-    padding:12px 16px;border-radius:12px;cursor:pointer;font-weight:700;
+    padding:14px 16px;border-radius:12px;cursor:pointer;font-weight:800;width:100%;
     transition:.15s transform ease, .15s background ease, .15s opacity ease;
-    width:100%;
   }
   button:hover{transform:translateY(-1px)}
   button:disabled{opacity:.6;cursor:not-allowed;transform:none}
-  .primary{
-    background:linear-gradient(135deg,var(--accent-pink),var(--accent-pink-2));
-    border-color:transparent;
-  }
-  .ghost{background:#120f15}
-  .danger{background:#22121b;border-color:#3b1a2b}
+  .primary{background:linear-gradient(135deg,var(--pink1),var(--pink2)); border-color:transparent;}
 
-  /* Card */
-  .today{display:grid;gap:12px}
-  .date{color:var(--muted);font-size:14px}
-  .card{
-    border:1px solid var(--border); border-radius:14px; padding:14px;
-    background:#120f15;
-  }
-  .card-head{
-    display:flex; align-items:center; justify-content:space-between; gap:10px;
-  }
-  .badge{
-    display:inline-flex;align-items:center;gap:8px;font-size:12px;padding:6px 10px;
-    border-radius:999px;background:#19141b;border:1px solid #2a2230;color:#ffdff0;
-  }
-  .cat{
-    display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:14px;
-    padding:6px 10px;border-radius:999px;border:1px solid #2a2230;
-  }
+  .card{border:1px solid var(--border); border-radius:14px; padding:14px; background:#120f15; margin-top:12px;}
+  .card-head{display:flex; align-items:center; justify-content:space-between; gap:10px;}
+  .cat{display:inline-flex;align-items:center;gap:8px;font-weight:800;font-size:14px;
+       padding:6px 10px;border-radius:999px;border:1px solid #2a2230;}
   .dot{width:10px;height:10px;border-radius:999px}
   .cat.white{background:linear-gradient(180deg,#1c1820,#14121a)}
   .cat.orange{background:linear-gradient(180deg,#25181b,#1b1316)}
@@ -94,49 +56,30 @@
   .dot.white{background:#ffe9ff}
   .dot.orange{background:#ffb077}
   .dot.black{background:#ff4fa3}
+  .badge{display:inline-flex;align-items:center;gap:8px;font-size:12px;padding:6px 10px;
+         border-radius:999px;background:#19141b;border:1px solid #2a2230;color:#ffdff0;}
 
-  .task{
-    margin-top:10px;
-    border-top:1px dashed #2a2230; padding-top:12px;
-    user-select:text;
-  }
-  .task[hidden]{display:none}
   .reveal{
-    display:flex; align-items:center; gap:10px; cursor:pointer;
-    padding:10px; border-radius:10px;
+    display:flex; align-items:center; gap:10px; cursor:pointer; margin-top:10px;
+    padding:12px; border-radius:10px;
     background:linear-gradient(180deg,rgba(255,122,182,.06),rgba(0,0,0,.05));
   }
   .reveal:hover{background:linear-gradient(180deg,rgba(255,122,182,.12),rgba(0,0,0,.06))}
   .chev{transition:transform .15s ease}
   .reveal[aria-expanded="true"] .chev{transform:rotate(90deg)}
-
-  /* History */
-  .history h3, .settings h3{margin:0 0 8px; font-size:16px}
-  .item{
-    display:flex; align-items:center; justify-content:space-between; gap:10px;
-    padding:10px 0; border-bottom:1px dashed #2a2230; color:#ffeaf7;
-  }
-  .item:last-child{border-bottom:0}
-  .item .left{display:flex; align-items:center; gap:8px}
-  .item .txt{color:#ffd7eb; opacity:.9;font-size:12px;max-width:60ch;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-
-  .footer{margin-top:10px;text-align:center;color:var(--muted);font-size:12px}
+  .task{margin-top:10px;border-top:1px dashed #2a2230; padding-top:12px;}
+  .task[hidden]{display:none}
 </style>
 </head>
 <body>
   <div class="app">
     <header>
       <div class="logo"><span>PUSIK<br/>GAME</span></div>
-      <div>
-        <h1>PUSIK GAME</h1>
-        <div class="tiny">Минималистичная игра в розовых тонах · одна карточка в день</div>
-      </div>
+      <h1>PUSIK GAME</h1>
     </header>
 
-    <section class="panel today" aria-live="polite">
-      <div class="date">Сегодня: <span id="todayStr">—</span></div>
-
-      <button id="chooseBtn" class="primary">Выбрать карточку</button>
+    <section class="panel" aria-live="polite">
+      <button id="chooseBtn" class="primary">Начать задание</button>
 
       <article id="card" class="card" hidden>
         <div class="card-head">
@@ -144,288 +87,116 @@
             <span class="dot"></span>
             <span id="catLabel">—</span>
           </div>
-          <span class="badge">На сегодня выбрано</span>
+          <span class="badge">на сегодня выбрано</span>
         </div>
 
         <div id="reveal" class="reveal" role="button" tabindex="0" aria-expanded="false" aria-controls="taskText">
           <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path d="M9 6l6 6-6 6" stroke="#ffd7eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          <strong>Показать/скрыть задание</strong>
+          <strong>Показать / скрыть задание</strong>
         </div>
         <div id="taskText" class="task" hidden></div>
       </article>
     </section>
-
-    <div class="row" style="margin-top:16px">
-      <section class="panel history">
-        <h3>История (последние 14 дней)</h3>
-        <div id="historyList" class="list tiny">Пока пусто.</div>
-      </section>
-
-      <section class="panel settings">
-        <h3>Настройки</h3>
-        <div class="tiny">Эти данные хранятся только в <code>localStorage</code> на этом устройстве.</div>
-        <div style="margin-top:10px;display:grid;gap:8px">
-          <button id="resetBtn" class="danger">Сбросить прогресс</button>
-        </div>
-      </section>
-    </div>
-
-    <div class="footer">© PUSIK GAME · локальная версия для теста</div>
   </div>
 
 <script>
-/* =======================
-   ДАННЫЕ КАРТОЧЕК (ТЕСТ)
-   Добавляйте свои задания в эти массивы (до 20 на категорию).
-   ======================= */
+/* ===== Контент (пример) — добавь свои тексты ===== */
 const CARDS = {
   white: [
-    { id:'w1', text:'Белая #1 — Напиши друг другу по 3 тёплых комплимента разными словами.' },
-    { id:'w2', text:'Белая #2 — Придумайте короткую «легенду» знакомства и разыграйте диалог на 2 минуты.' },
-    { id:'w3', text:'Белая #3 — 5-минутный массаж кистей/плеч, без разговоров, только взгляд.' },
-    { id:'w4', text:'Белая #4 — Совместное тихое дыхание: 10 циклов 4–6 (вдох 4 с, выдох 6 с).' },
-    { id:'w5', text:'Белая #5 — Составьте «список мини-радостей» на неделю по 3 пункта каждому.' }
-    // ← добавьте ещё 5–15 ваших белых заданий
+    { id:'w1', text:'Белая #1 — Напишите друг другу три тёплых комплимента.' },
+    { id:'w2', text:'Белая #2 — Совместное спокойное дыхание: 10 циклов 4–6.' },
+    { id:'w3', text:'Белая #3 — 5 минут лёгкого массажа плеч.' },
+    { id:'w4', text:'Белая #4 — Придумайте мини-легенду знакомства и разыграйте её.' },
+    { id:'w5', text:'Белая #5 — Список из трёх «мини-радостей» на неделю.' }
   ],
   orange: [
-    { id:'o1', text:'Оранжевая #1 — Флирт-переписка: обменяйтесь 3 короткими сообщениями в стиле игры ролей.' },
-    { id:'o2', text:'Оранжевая #2 — «Гид по желаниям»: каждый называет 3 вещи, которые хочется попробовать.' },
-    { id:'o3', text:'Оранжевая #3 — Ходьба рядом: 10 минут прогуляйтесь, держась за руки, обсуждая один секрет.' },
-    { id:'o4', text:'Оранжевая #4 — «Сцена кафе»: придумайте роли и поговорите на вымышленные темы 5 минут.' },
-    { id:'o5', text:'Оранжевая #5 — 7-минутный танец под трек, который выбирает она. Без телефонов.' }
-    // ← добавьте ещё 5–15 ваших оранжевых заданий
+    { id:'o1', text:'Оранжевая #1 — Флирт-переписка: обменяйтесь 3 сообщениями в ролях.' },
+    { id:'o2', text:'Оранжевая #2 — Каждый называет 3 желания «попробовать».' },
+    { id:'o3', text:'Оранжевая #3 — 7 минут танца без телефонов.' },
+    { id:'o4', text:'Оранжевая #4 — «Сцена кафе»: роли и разговор 5 минут.' },
+    { id:'o5', text:'Оранжевая #5 — Прогулка 10 минут, держась за руки, обсуждая один секрет.' }
   ],
   black: [
-    { id:'b1', text:'Чёрная #1 — Ролевая сцена «приказ и выполнение» в мягкой форме: 3 коротких задания в быту.' },
-    { id:'b2', text:'Чёрная #2 — «Правда или действие (лайт)»: по одному раунду, честно и без давления.' },
-    { id:'b3', text:'Чёрная #3 — «Сигнал остановки»: придумайте стоп-слово и протестируйте его один раз.' },
-    { id:'b4', text:'Чёрная #4 — Обмен желаниями: каждый формулирует 1 желание на ближайшую неделю.' },
-    { id:'b5', text:'Чёрная #5 — «Слепой выбор»: она выбирает одну из трёх записок с микро-заданиями.' }
-    // ← добавьте ещё 5–15 ваших чёрных заданий
+    { id:'b1', text:'Чёрная #1 — Мягкое «приказ и выполнение»: 3 коротких бытовых задания.' },
+    { id:'b2', text:'Чёрная #2 — «Правда или действие (лайт)»: по одному раунду.' },
+    { id:'b3', text:'Чёрная #3 — Придумайте стоп-слово и протестируйте его один раз.' },
+    { id:'b4', text:'Чёрная #4 — Каждый формулирует одно желание на неделю.' },
+    { id:'b5', text:'Чёрная #5 — «Слепой выбор»: она тянет одну из трёх записок.' }
   ]
 };
-// Примечание: Тексты — нейтральные и безопасные. Подставьте свои формулировки при необходимости.
 
-/* =======================
-   СОСТОЯНИЕ / ХРАНИЛИЩЕ
-   ======================= */
+/* ===== State / storage ===== */
 const STORAGE_KEY = 'pusik_game_state_v1';
-const DEFAULT_STATE = () => ({
-  date: todayKey(),
-  today: null, // {category:'white|orange|black', taskId:'w1|o3|b7'}
-  used: { white:[], orange:[], black:[] }, // какие задания уже выпадали в своих категориях
-  history: [] // [{date, category, taskId}]
-});
-function loadState(){
-  try{
-    const raw = localStorage.getItem(STORAGE_KEY);
-    return Object.assign(DEFAULT_STATE(), raw ? JSON.parse(raw) : {});
-  }catch(e){
-    return DEFAULT_STATE();
-  }
-}
-function saveState(s){
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(s));
-}
-
-/* =======================
-   ДАТЫ / УТИЛИТЫ
-   ======================= */
-function todayKey(){
-  const d = new Date();
-  const y = d.getFullYear();
-  const m = String(d.getMonth()+1).padStart(2,'0');
-  const day = String(d.getDate()).padStart(2,'0');
-  return `${y}-${m}-${day}`;
-}
-function prettyToday(){
-  return new Date().toLocaleDateString('ru-RU',{weekday:'long', day:'numeric', month:'long'});
-}
-function rnd(arr){ return arr[Math.floor(Math.random()*arr.length)] }
-
-/* =======================
-   ВЫБОР КАТЕГОРИИ / ЗАДАНИЯ
-   ======================= */
-function pickCategory(){
-  // Равновероятный выбор одной из трёх категорий
-  return rnd(['white','orange','black']);
-}
-function pickTask(category, usedIds){
-  const all = CARDS[category] || [];
-  const pool = all.filter(x => !usedIds.includes(x.id));
-  // если всё использовано — обнуляем пул
-  const src = pool.length ? pool : all;
-  const choice = rnd(src);
-  return choice || null;
-}
-
-/* =======================
-   ОБНОВЛЕНИЕ ДНЯ / ИСТОРИЯ
-   ======================= */
+const DEFAULT_STATE = () => ({ date: todayKey(), today: null, used:{white:[],orange:[],black:[]}, history:[] });
+const loadState = () => { try{ return Object.assign(DEFAULT_STATE(), JSON.parse(localStorage.getItem(STORAGE_KEY)||'{}')); }catch{ return DEFAULT_STATE(); } };
+const saveState = (s) => localStorage.setItem(STORAGE_KEY, JSON.stringify(s));
+const todayKey = () => { const d=new Date(); const y=d.getFullYear(), m=String(d.getMonth()+1).padStart(2,'0'), day=String(d.getDate()).padStart(2,'0'); return `${y}-${m}-${day}`; };
+const rnd = (arr) => arr[Math.floor(Math.random()*arr.length)];
 function rollToToday(state){
   const key = todayKey();
-  if(state.date !== key){
-    // прошёл день — отправляем вчерашний выбор в историю (если был)
-    if(state.today){
-      state.history.unshift({
-        date: state.date,
-        category: state.today.category,
-        taskId: state.today.taskId
-      });
-      state.history = state.history.slice(0,14); // храним последние 14 дней
-    }
-    state.date = key;
-    state.today = null; // выбор на новый день ещё не сделан
-  }
+  if(state.date !== key){ if(state.today){ state.history.unshift({date:state.date, ...state.today}); state.history=state.history.slice(0,14); }
+    state.date=key; state.today=null; }
   return state;
 }
+function pickCategory(){ return rnd(['white','orange','black']); }
+function pickTask(category, usedIds){
+  const all = CARDS[category]||[];
+  const pool = all.filter(x=>!usedIds.includes(x.id));
+  const src = pool.length ? pool : all;
+  return rnd(src)||null;
+}
 
-/* =======================
-   РЕНДЕР / UI
-   ======================= */
+/* ===== UI ===== */
 const $ = (id)=>document.getElementById(id);
-const elToday = $('todayStr');
-const btnChoose = $('chooseBtn');
-const card = $('card');
-const catBadge = $('catBadge');
-const catLabel = $('catLabel');
-const taskText = $('taskText');
-const reveal = $('reveal');
-const historyList = $('historyList');
-const btnReset = $('resetBtn');
+const btnChoose = $('chooseBtn'); const card = $('card');
+const catBadge = $('catBadge'); const catLabel = $('catLabel');
+const taskText = $('taskText'); const reveal = $('reveal');
 
-let state = loadState();
-state = rollToToday(state);
-saveState(state);
-render();
+let state = rollToToday(loadState()); saveState(state); render();
 
 function render(){
-  elToday.textContent = prettyToday();
-
-  // показать/скрыть карточку и кнопку
   if(state.today){
-    btnChoose.disabled = true;
-    btnChoose.textContent = 'Карточка выбрана';
+    btnChoose.disabled = true; btnChoose.textContent = 'Карточка выбрана';
     card.hidden = false;
-
-    const category = state.today.category;
-    const task = getTaskById(category, state.today.taskId);
-
-    // Стиль бейджа категории
-    catBadge.classList.remove('white','orange','black');
-    catBadge.classList.add(category);
-    const dot = catBadge.querySelector('.dot');
-    dot.className = `dot ${category}`;
-
-    catLabel.textContent = categoryLabel(category);
+    const cat = state.today.category; const task = getTask(cat, state.today.taskId);
+    catBadge.className = `cat ${cat}`;
+    catBadge.querySelector('.dot').className = `dot ${cat}`;
+    catLabel.textContent = cat==='white'?'Белая':cat==='orange'?'Оранжевая':'Чёрная';
     taskText.textContent = task ? task.text : 'Задание';
-
   }else{
-    btnChoose.disabled = false;
-    btnChoose.textContent = 'Выбрать карточку';
+    btnChoose.disabled = false; btnChoose.textContent = 'Начать задание';
     card.hidden = true;
   }
+}
+function getTask(cat,id){ return (CARDS[cat]||[]).find(x=>x.id===id)||null; }
 
-  // История
-  if(!state.history.length){
-    historyList.textContent = 'Пока пусто.';
-  }else{
-    historyList.innerHTML = state.history
-      .slice(0,14)
-      .map(h => {
-        const t = getTaskById(h.category, h.taskId);
-        const label = categoryLabel(h.category);
-        const dot = `<span class="dot ${h.category}"></span>`;
-        return `<div class="item">
-          <div class="left">${dot}<strong>${h.date}</strong> · <span>${label}</span></div>
-          <div class="txt">${t ? escapeHtml(t.text) : 'Задание'}</div>
-        </div>`;
-      }).join('');
-  }
-}
-
-function categoryLabel(cat){
-  if(cat==='white') return 'Белая';
-  if(cat==='orange') return 'Оранжевая';
-  if(cat==='black') return 'Чёрная';
-  return 'Категория';
-}
-function getTaskById(category, id){
-  const arr = CARDS[category] || [];
-  return arr.find(x=>x.id===id) || null;
-}
-function escapeHtml(str){
-  return String(str)
-    .replaceAll('&','&amp;')
-    .replaceAll('<','&lt;')
-    .replaceAll('>','&gt;')
-    .replaceAll('"','&quot;')
-    .replaceAll("'",'&#39;');
-}
-
-/* =======================
-   ОБРАБОТЧИКИ
-   ======================= */
 btnChoose.addEventListener('click', () => {
-  if(state.today) return; // уже выбрано на сегодня
-
-  // 1) выбрать категорию
+  if(state.today) return;
   const category = pickCategory();
-
-  // 2) выбрать задание внутри категории (без повтора до исчерпания)
-  const usedIds = state.used[category] || [];
-  const task = pickTask(category, usedIds);
-  if(!task){
-    alert('Нет доступных заданий в этой категории.');
-    return;
-  }
-
-  // если пул был исчерпан и pickTask вернул из полного списка — обнулим used
+  const used = state.used[category]||[];
+  const task = pickTask(category, used);
   const allIds = (CARDS[category]||[]).map(x=>x.id);
-  if(usedIds.length >= allIds.length){ state.used[category] = []; }
-
-  // зафиксировать выбор
+  if(used.length >= allIds.length) state.used[category]=[];
   state.today = { category, taskId: task.id };
-
-  // отметить как использованное
-  if(!state.used[category].includes(task.id)){
-    state.used[category].push(task.id);
-  }
-
-  saveState(state);
-  render();
+  if(!state.used[category].includes(task.id)) state.used[category].push(task.id);
+  saveState(state); render();
 });
 
 reveal.addEventListener('click', toggleTask);
-reveal.addEventListener('keydown', (e) => {
-  if(e.key===' ' || e.key==='Enter'){ e.preventDefault(); toggleTask(); }
-});
-
+reveal.addEventListener('keydown', (e)=>{ if(e.key===' '||e.key==='Enter'){ e.preventDefault(); toggleTask(); }});
 function toggleTask(){
-  const isOpen = reveal.getAttribute('aria-expanded') === 'true';
-  reveal.setAttribute('aria-expanded', String(!isOpen));
-  taskText.hidden = isOpen;
+  const open = reveal.getAttribute('aria-expanded')==='true';
+  reveal.setAttribute('aria-expanded', String(!open));
+  taskText.hidden = open;
 }
 
-btnReset.addEventListener('click', () => {
-  if(!confirm('Сбросить локальный прогресс и начать заново?')) return;
-  state = DEFAULT_STATE();
-  saveState(state);
-  render();
-});
-
-/* Полуночный авто-сдвиг (на всякий случай, если вкладка открыта ночью) */
+/* Полуночная проверка на смену дня */
 setInterval(() => {
-  const nowKey = todayKey();
-  if(state.date !== nowKey){
-    state = rollToToday(state);
-    saveState(state);
-    render();
-  }
-}, 60 * 1000); // проверка раз в минуту
+  const key = todayKey();
+  if(state.date !== key){ state = rollToToday(state); saveState(state); render(); }
+}, 60*1000);
 </script>
 </body>
 </html>
-```
