@@ -42,7 +42,6 @@
     transition:.15s transform ease, .15s background ease, .15s opacity ease;
   }
   button:hover{transform:translateY(-1px)}
-  button:disabled{opacity:.6;cursor:not-allowed;transform:none}
   .primary{background:linear-gradient(135deg,var(--pink1),var(--pink2)); border-color:transparent;}
 
   .card{border:1px solid var(--border); border-radius:14px; padding:14px; background:#120f15; margin-top:12px;}
@@ -67,7 +66,7 @@
   .reveal:hover{background:linear-gradient(180deg,rgba(255,122,182,.12),rgba(0,0,0,.06))}
   .chev{transition:transform .15s ease}
   .reveal[aria-expanded="true"] .chev{transform:rotate(90deg)}
-  .task{margin-top:10px;border-top:1px dashed #2a2230; padding-top:12px;}
+  .task{margin-top:10px;border-top:1px dashed #2a2430; padding-top:12px;}
   .task[hidden]{display:none}
 </style>
 </head>
@@ -79,7 +78,7 @@
     </header>
 
     <section class="panel" aria-live="polite">
-      <button id="chooseBtn" class="primary">Начать задание</button>
+      <button id="actionBtn" class="primary">Выбрать задание</button>
 
       <article id="card" class="card" hidden>
         <div class="card-head">
@@ -127,76 +126,44 @@ const CARDS = {
   ]
 };
 
-/* ===== State / storage ===== */
-const STORAGE_KEY = 'pusik_game_state_v1';
-const DEFAULT_STATE = () => ({ date: todayKey(), today: null, used:{white:[],orange:[],black:[]}, history:[] });
-const loadState = () => { try{ return Object.assign(DEFAULT_STATE(), JSON.parse(localStorage.getItem(STORAGE_KEY)||'{}')); }catch{ return DEFAULT_STATE(); } };
-const saveState = (s) => localStorage.setItem(STORAGE_KEY, JSON.stringify(s));
-const todayKey = () => { const d=new Date(); const y=d.getFullYear(), m=String(d.getMonth()+1).padStart(2,'0'), day=String(d.getDate()).padStart(2,'0'); return `${y}-${m}-${day}`; };
-const rnd = (arr) => arr[Math.floor(Math.random()*arr.length)];
-function rollToToday(state){
-  const key = todayKey();
-  if(state.date !== key){ if(state.today){ state.history.unshift({date:state.date, ...state.today}); state.history=state.history.slice(0,14); }
-    state.date=key; state.today=null; }
-  return state;
-}
-function pickCategory(){ return rnd(['white','orange','black']); }
-function pickTask(category, usedIds){
-  const all = CARDS[category]||[];
-  const pool = all.filter(x=>!usedIds.includes(x.id));
-  const src = pool.length ? pool : all;
-  return rnd(src)||null;
-}
-
-/* ===== UI ===== */
 const $ = (id)=>document.getElementById(id);
-const btnChoose = $('chooseBtn'); const card = $('card');
-const catBadge = $('catBadge'); const catLabel = $('catLabel');
-const taskText = $('taskText'); const reveal = $('reveal');
+const actionBtn = $('actionBtn');
+const card = $('card');
+const catBadge = $('catBadge');
+const catLabel = $('catLabel');
+const taskText = $('taskText');
+const reveal = $('reveal');
 
-let state = rollToToday(loadState()); saveState(state); render();
+function rnd(arr){ return arr[Math.floor(Math.random()*arr.length)] }
+function pickCategory(){ return rnd(['white','orange','black']); }
+function pickTask(category){ return rnd(CARDS[category]||[]); }
 
-function render(){
-  if(state.today){
-    btnChoose.disabled = true; btnChoose.textContent = 'Карточка выбрана';
-    card.hidden = false;
-    const cat = state.today.category; const task = getTask(cat, state.today.taskId);
-    catBadge.className = `cat ${cat}`;
-    catBadge.querySelector('.dot').className = `dot ${cat}`;
-    catLabel.textContent = cat==='white'?'Белая':cat==='orange'?'Оранжевая':'Чёрная';
-    taskText.textContent = task ? task.text : 'Задание';
-  }else{
-    btnChoose.disabled = false; btnChoose.textContent = 'Начать задание';
-    card.hidden = true;
-  }
-}
-function getTask(cat,id){ return (CARDS[cat]||[]).find(x=>x.id===id)||null; }
-
-btnChoose.addEventListener('click', () => {
-  if(state.today) return;
+function generate(){
   const category = pickCategory();
-  const used = state.used[category]||[];
-  const task = pickTask(category, used);
-  const allIds = (CARDS[category]||[]).map(x=>x.id);
-  if(used.length >= allIds.length) state.used[category]=[];
-  state.today = { category, taskId: task.id };
-  if(!state.used[category].includes(task.id)) state.used[category].push(task.id);
-  saveState(state); render();
-});
+  const task = pickTask(category) || { text:'Задание' };
 
-reveal.addEventListener('click', toggleTask);
-reveal.addEventListener('keydown', (e)=>{ if(e.key===' '||e.key==='Enter'){ e.preventDefault(); toggleTask(); }});
-function toggleTask(){
+  // показать карточку
+  card.hidden = false;
+  catBadge.className = `cat ${category}`;
+  catBadge.querySelector('.dot').className = `dot ${category}`;
+  catLabel.textContent = category==='white'?'Белая':category==='orange'?'Оранжевая':'Чёрная';
+
+  // скрыть/обновить текст задания
+  reveal.setAttribute('aria-expanded','false');
+  taskText.hidden = true;
+  taskText.textContent = task.text;
+
+  // переключить текст кнопки
+  actionBtn.textContent = 'Сгенерить новое задание';
+}
+
+actionBtn.addEventListener('click', generate);
+reveal.addEventListener('click', () => {
   const open = reveal.getAttribute('aria-expanded')==='true';
   reveal.setAttribute('aria-expanded', String(!open));
   taskText.hidden = open;
-}
-
-/* Полуночная проверка на смену дня */
-setInterval(() => {
-  const key = todayKey();
-  if(state.date !== key){ state = rollToToday(state); saveState(state); render(); }
-}, 60*1000);
+});
+reveal.addEventListener('keydown', (e)=>{ if(e.key===' '||e.key==='Enter'){ e.preventDefault(); reveal.click(); }});
 </script>
 </body>
 </html>
