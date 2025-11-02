@@ -5,169 +5,165 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>PUSIK GAME</title>
 
-<!-- PWA -->
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="mobile-web-app-capable" content="yes" />
 
-<!-- Встроенный favicon -->
 <link rel="icon" type="image/svg+xml" sizes="any"
-  href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%23ff7ab6'/%3E%3Cstop offset='1' stop-color='%23ff4fa3'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='12' ry='12' fill='url(%23g)'/%3E%3C/svg%3E" />
+  href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%23ff7ab6'/%3E%3Cstop offset='1' stop-color='%23ff4fa3'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='12' ry='12' fill='url(%23g)'/%3E%3C/svg%3E" />
 
 <style>
-  :root{
-    --bg:#0f0d12; --panel:#141218; --text:#fff6fb; --muted:#ffd7eb; --border:#2a2430;
-    --pink1:#ff7ab6; --pink2:#ff4fa3;
-  }
-  *{box-sizing:border-box}
-  html,body{height:100%}
-  body{
-    margin:0; font:16px/1.5 system-ui,-apple-system,Inter,Segoe UI,Roboto,Arial,sans-serif; color:var(--text);
-    background:
-      radial-gradient(900px 600px at 80% -10%, rgba(255,122,182,.20), transparent 60%),
-      radial-gradient(800px 500px at -10% 110%, rgba(255,79,163,.18), transparent 60%),
-      var(--bg);
-    display:flex; align-items:flex-start; justify-content:center; padding:24px;
-  }
-  .app{width:100%; max-width:720px}
+  :root{
+    --bg:#0f0d12; --panel:#141218; --text:#fff6fb; --muted:#ffd7eb; --border:#2a2430;
+    --pink1:#ff7ab6; --pink2:#ff4fa3;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0; font:16px/1.5 system-ui,-apple-system,Inter,Segoe UI,Roboto,Arial,sans-serif; color:var(--text);
+    background:
+      radial-gradient(900px 600px at 80% -10%, rgba(255,122,182,.20), transparent 60%),
+      radial-gradient(800px 500px at -10% 110%, rgba(255,79,163,.18), transparent 60%),
+      var(--bg);
+    display:flex; align-items:flex-start; justify-content:center; padding:24px;
+  }
+  .app{width:100%; max-width:720px}
 
-  /* Бренд */
-  .brand{display:flex; flex-direction:column; align-items:center; gap:12px; text-align:center; margin-bottom:16px}
-  .logo{
-    width:68px;height:68px;border-radius:20px;
-    background:linear-gradient(135deg,var(--pink1),var(--pink2));
-    box-shadow:0 10px 30px rgba(255,79,163,.25), 0 6px 18px rgba(0,0,0,.35);
-    display:grid;place-items:center;color:#fff;font-weight:900;letter-spacing:.3px;
-  }
-  .logo span{font-size:12px;line-height:1.05}
-  h1{margin:0;font-size:clamp(18px,4.5vw,22px); letter-spacing:.4px}
+  /* Бренд */
+  .brand{display:flex; flex-direction:column; align-items:center; gap:12px; text-align:center; margin-bottom:16px}
+  .logo{
+    width:68px;height:68px;border-radius:20px;
+    background:linear-gradient(135deg,var(--pink1),var(--pink2));
+    box-shadow:0 10px 30px rgba(255,79,163,.25), 0 6px 18px rgba(0,0,0,.35);
+    display:grid;place-items:center;color:#fff;font-weight:900;letter-spacing:.3px;
+  }
+  .logo span{font-size:12px;line-height:1.05}
+  h1{margin:0;font-size:clamp(18px,4.5vw,22px); letter-spacing:.4px}
 
-  /* Панель/кнопки */
-  .panel{
-    background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(0,0,0,.15)),var(--panel);
-    border:1px solid var(--border); border-radius:16px; padding:16px;
-    box-shadow:0 10px 30px rgba(0,0,0,.35);
-    position:relative;
-  }
-  .tabs{display:flex; gap:8px; margin-bottom:12px}
-  .tab{
-    flex:1; text-align:center; padding:10px 12px; border-radius:12px; cursor:pointer;
-    border:1px solid var(--border); background:#17131b; font-weight:800;
-  }
-  .tab[aria-selected="true"]{background:linear-gradient(135deg,var(--pink1),var(--pink2)); border-color:transparent}
+  /* Панель/кнопки */
+  .panel{
+    background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(0,0,0,.15)),var(--panel);
+    border:1px solid var(--border); border-radius:16px; padding:16px;
+    box-shadow:0 10px 30px rgba(0,0,0,.35);
+    position:relative;
+  }
+  .tabs{display:flex; gap:8px; margin-bottom:12px}
+  .tab{
+    flex:1; text-align:center; padding:10px 12px; border-radius:12px; cursor:pointer;
+    border:1px solid var(--border); background:#17131b; font-weight:800;
+  }
+  .tab[aria-selected="true"]{background:linear-gradient(135deg,var(--pink1),var(--pink2)); border-color:transparent}
 
-  button{
-    appearance:none;border:1px solid var(--border);background:#17131b;color:var(--text);
-    padding:14px 16px;border-radius:12px;cursor:pointer;font-weight:800;width:100%;
-    transition:.15s transform ease, .15s background ease, .15s opacity ease;
-  }
-  button:hover{transform:translateY(-1px)}
-  button:disabled{opacity:.6;cursor:not-allowed;transform:none}
-  .primary{background:linear-gradient(135deg,var(--pink1),var(--pink2)); border-color:transparent;}
+  button{
+    appearance:none;border:1px solid var(--border);background:#17131b;color:var(--text);
+    padding:14px 16px;border-radius:12px;cursor:pointer;font-weight:800;width:100%;
+    transition:.15s transform ease, .15s background ease, .15s opacity ease;
+  }
+  button:hover{transform:translateY(-1px)}
+  button:disabled{opacity:.6;cursor:not-allowed;transform:none}
+  .primary{background:linear-gradient(135deg,var(--pink1),var(--pink2)); border-color:transparent;}
 
-  /* Карточка */
-  .card{border:1px solid var(--border); border-radius:14px; padding:14px; background:#120f15; margin-top:12px;}
-  .card-head{display:flex; align-items:center; justify-content:space-between; gap:10px;}
-  .cat{display:inline-flex;align-items:center;gap:8px;font-weight:800;font-size:14px;
-       padding:6px 10px;border-radius:999px;border:1px solid #2a2230;}
-  .dot{width:10px;height:10px;border-radius:999px}
-  .cat.white{background:linear-gradient(180deg,#1c1820,#14121a)}
-  .cat.orange{background:linear-gradient(180deg,#25181b,#1b1316)}
-  .cat.black{background:linear-gradient(180deg,#161219,#110f14)}
-  .dot.white{background:#ffe9ff}
-  .dot.orange{background:#ffb077}
-  .dot.black{background:#ff4fa3}
-  .badge{display:inline-flex;align-items:center;gap:8px;font-size:12px;padding:6px 10px;
-         border-radius:999px;background:#19141b;border:1px solid #2a2230;color:#ffdff0;}
+  /* Карточка */
+  .card{border:1px solid var(--border); border-radius:14px; padding:14px; background:#120f15; margin-top:12px;}
+  .card-head{display:flex; align-items:center; justify-content:space-between; gap:10px;}
+  .cat{display:inline-flex;align-items:center;gap:8px;font-weight:800;font-size:14px;
+       padding:6px 10px;border-radius:999px;border:1px solid #2a2230;}
+  .dot{width:10px;height:10px;border-radius:999px}
+  .cat.white{background:linear-gradient(180deg,#1c1820,#14121a)}
+  .cat.orange{background:linear-gradient(180deg,#25181b,#1b1316)}
+  .cat.black{background:linear-gradient(180deg,#161219,#110f14)}
+  .dot.white{background:#ffe9ff}
+  .dot.orange{background:#ffb077}
+  .dot.black{background:#ff4fa3}
+  .badge{display:inline-flex;align-items:center;gap:8px;font-size:12px;padding:6px 10px;
+         border-radius:999px;background:#19141b;border:1px solid #2a2230;color:#ffdff0;}
 
-  .reveal{
-    display:flex; align-items:center; gap:10px; cursor:pointer; margin-top:10px;
-    padding:12px; border-radius:10px;
-    background:linear-gradient(180deg,rgba(255,122,182,.06),rgba(0,0,0,.05));
-  }
-  .reveal:hover{background:linear-gradient(180deg,rgba(255,122,182,.12),rgba(0,0,0,.06))}
-  .chev{transition:transform .15s ease}
-  .reveal[aria-expanded="true"] .chev{transform:rotate(90deg)}
+  .reveal{
+    display:flex; align-items:center; gap:10px; cursor:pointer; margin-top:10px;
+    padding:12px; border-radius:10px;
+    background:linear-gradient(180deg,rgba(255,122,182,.06),rgba(0,0,0,.05));
+  }
+  .reveal:hover{background:linear-gradient(180deg,rgba(255,122,182,.12),rgba(0,0,0,.06))}
+  .chev{transition:transform .15s ease}
+  .reveal[aria-expanded="true"] .chev{transform:rotate(90deg)}
 
-  .task{
-    margin-top:10px;border-top:1px dashed #2a2430; padding-top:12px;
-    white-space: pre-line; /* показываем переводы строк и пустые строки */
-  }
-  .task[hidden]{display:none}
+  .task{
+    margin-top:10px;border-top:1px dashed #2a2430; padding-top:12px;
+    white-space: pre-line; /* показываем переводы строк и пустые строки */
+  }
+  .task[hidden]{display:none}
 
-  .actions{display:grid; gap:10px; margin-top:12px;}
-  .sticky-confirm{position:sticky; bottom:0; background:transparent; padding-top:8px}
+  .actions{display:grid; gap:10px; margin-top:12px;}
+  .sticky-confirm{position:sticky; bottom:0; background:transparent; padding-top:8px}
 
-  /* История */
-  .history-group{margin-top:8px}
-  .week-title{font-weight:800; opacity:.85; margin:6px 4px 8px}
-  details{border:1px solid var(--border); border-radius:12px; background:#17131b; margin:8px 0; overflow:hidden}
-  summary{list-style:none; cursor:pointer; padding:12px 14px; display:flex; align-items:center; justify-content:space-between; gap:10px}
-  summary::-webkit-details-marker{display:none}
-  .sum-left{display:flex; align-items:center; gap:8px; font-weight:800}
-  .d-dot{width:8px; height:8px; border-radius:999px}
-  .d-dot.white{background:#ffe9ff} .d-dot.orange{background:#ffb077} .d-dot.black{background:#ff4fa3}
-  .sum-right{display:flex; align-items:center; gap:10px}
-  .chevH{width:16px;height:16px;opacity:.85;transition:transform .15s ease}
-  details[open] .chevH{transform:rotate(90deg)}
-  .d-text{padding:0 14px 14px; color:var(--muted); white-space:pre-line}
-  .empty{opacity:.7; padding:6px}
+  /* История */
+  .history-group{margin-top:8px}
+  .week-title{font-weight:800; opacity:.85; margin:6px 4px 8px}
+  details{border:1px solid var(--border); border-radius:12px; background:#17131b; margin:8px 0; overflow:hidden}
+  summary{list-style:none; cursor:pointer; padding:12px 14px; display:flex; align-items:center; justify-content:space-between; gap:10px}
+  summary::-webkit-details-marker{display:none}
+  .sum-left{display:flex; align-items:center; gap:8px; font-weight:800}
+  .d-dot{width:8px; height:8px; border-radius:999px}
+  .d-dot.white{background:#ffe9ff} .d-dot.orange{background:#ffb077} .d-dot.black{background:#ff4fa3}
+  .sum-right{display:flex; align-items:center; gap:10px}
+  .chevH{width:16px;height:16px;opacity:.85;transition:transform .15s ease}
+  details[open] .chevH{transform:rotate(90deg)}
+  .d-text{padding:0 14px 14px; color:var(--muted); white-space:pre-line}
+  .empty{opacity:.7; padding:6px}
 
-  /* Dev-панель (?dev=1) */
-  .devbar{position:absolute; top:12px; right:12px; display:flex; gap:8px; z-index:3}
-  .devbar button{width:auto; padding:8px 10px; font-weight:800; font-size:12px;
-    border-radius:10px; border:1px solid var(--border); background:#17131b; color:var(--text);}
-  .devbar button:hover{transform:translateY(-1px)}
+  /* Dev-панель (?dev=1) */
+  .devbar{position:absolute; top:12px; right:12px; display:flex; gap:8px; z-index:3}
+  .devbar button{width:auto; padding:8px 10px; font-weight:800; font-size:12px;
+    border-radius:10px; border:1px solid var(--border); background:#17131b; color:var(--text);}
+  .devbar button:hover{transform:translateY(-1px)}
 </style>
 </head>
 <body>
-  <div class="app">
-    <header class="brand">
-      <div class="logo"><span>PUSIK<br/>GAME</span></div>
-      <h1>PUSIK GAME</h1>
-    </header>
+  <div class="app">
+    <header class="brand">
+      <div class="logo"><span>PUSIK<br/>GAME</span></div>
+      <h1>PUSIK GAME</h1>
+    </header>
 
-    <section class="panel" aria-live="polite">
-      <nav class="tabs" role="tablist">
-        <button id="tab-new"  class="tab" role="tab" aria-selected="true">Новое задание</button>
-        <button id="tab-history" class="tab" role="tab" aria-selected="false">История</button>
-      </nav>
+    <section class="panel" aria-live="polite">
+      <nav class="tabs" role="tablist">
+        <button id="tab-new"  class="tab" role="tab" aria-selected="true">Новое задание</button>
+        <button id="tab-history" class="tab" role="tab" aria-selected="false">История</button>
+      </nav>
 
-      <!-- Новое задание -->
-      <div id="view-new" role="tabpanel">
-        <button id="btnGenerate" class="primary">Выбрать задание</button>
+            <div id="view-new" role="tabpanel">
+        <button id="btnGenerate" class="primary">Выбрать задание</button>
 
-        <article id="card" class="card" hidden>
-          <div class="card-head">
-            <div class="cat" id="catBadge">
-              <span class="dot"></span>
-              <span id="catLabel">—</span>
-            </div>
-            <span id="badgeToday" class="badge" hidden>на сегодня выбрано</span>
-          </div>
+        <article id="card" class="card" hidden>
+          <div class="card-head">
+            <div class="cat" id="catBadge">
+              <span class="dot"></span>
+              <span id="catLabel">—</span>
+            </div>
+            <span id="badgeToday" class="badge" hidden>на сегодня выбрано</span>
+          </div>
 
-          <div id="reveal" class="reveal" role="button" tabindex="0" aria-expanded="false" aria-controls="taskText">
-            <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M9 6l6 6-6 6" stroke="#ffd7eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <strong>Показать / скрыть задание</strong>
-          </div>
-          <div id="taskText" class="task" hidden></div>
+          <div id="reveal" class="reveal" role="button" tabindex="0" aria-expanded="false" aria-controls="taskText">
+            <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M9 6l6 6-6 6" stroke="#ffd7eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <strong>Показать / скрыть задание</strong>
+          </div>
+          <div id="taskText" class="task" hidden></div>
 
-          <div class="actions sticky-confirm">
-            <button id="btnConfirm" class="primary" hidden>Выбираю это задание</button>
-          </div>
-        </article>
-      </div>
+          <div class="actions sticky-confirm">
+            <button id="btnConfirm" class="primary" hidden>Выбираю это задание</button>
+          </div>
+        </article>
+      </div>
 
-      <!-- История -->
-      <div id="view-history" role="tabpanel" hidden>
-        <div class="history-group">
-          <div class="week-title">Эта неделя</div>
-          <div id="historyList"></div>
-        </div>
-      </div>
-    </section>
-  </div>
+            <div id="view-history" role="tabpanel" hidden>
+        <div class="history-group">
+          <div class="week-title">Эта неделя</div>
+          <div id="historyList"></div>
+        </div>
+      </div>
+    </section>
+  </div>
 
 <script>
 /* ===== ДАТЫ ===== */
@@ -175,67 +171,116 @@ const dowRU = ['ВС','ПН','ВТ','СР','ЧТ','ПТ','СБ'];
 const pad = (n)=>String(n).padStart(2,'0');
 const todayKey = ()=>{ const d=new Date(); return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`; };
 function mondayOfWeek(d=new Date()){
-  const x = new Date(d.getFullYear(), d.getMonth(), d.getDate());
-  const day = x.getDay(); const diff = (day===0? -6 : 1 - day);
-  x.setDate(x.getDate()+diff);
-  return `${x.getFullYear()}-${pad(x.getMonth()+1)}-${pad(x.getDate())}`;
+  const x = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+  const day = x.getDay(); const diff = (day===0? -6 : 1 - day);
+  x.setDate(x.getDate()+diff);
+  return `${x.getFullYear()}-${pad(x.getMonth()+1)}-pad(x.getDate())}`;
 }
 function formatDowLabel(isoDate){
-  const d = new Date(isoDate+'T00:00:00'); const w = dowRU[d.getDay()];
-  return (isoDate===todayKey()) ? 'Сегодня' : w;
+  const d = new Date(isoDate+'T00:00:00'); const w = dowRU[d.getDay()];
+  return (isoDate===todayKey()) ? 'Сегодня' : w;
 }
 
 /* ===== СОСТОЯНИЕ ===== */
 const STORAGE_KEY = 'pusik_game_state_v3';
 const DEFAULT_STATE = () => ({
-  date: todayKey(),
-  weekStart: mondayOfWeek(),
-  today: null,     // подтверждённое {category, taskId}
-  preview: null,   // сгенерировано, но не подтверждено
-  history: []      // [{date, category, taskId}]
+  date: todayKey(),
+  weekStart: mondayOfWeek(),
+  today: null,     // подтверждённое {category, taskId}
+  preview: null,   // сгенерировано, но не подтверждено
+  history: []      // [{date, category, taskId}]
 });
 const loadState = () => { try{ return Object.assign(DEFAULT_STATE(), JSON.parse(localStorage.getItem(STORAGE_KEY)||'{}')); }catch{ return DEFAULT_STATE(); } };
 const saveState = (s)=>localStorage.setItem(STORAGE_KEY, JSON.stringify(s));
 function rollDates(state){
-  const nowDate = todayKey(); const nowWeek = mondayOfWeek();
-  if(state.weekStart !== nowWeek){ state.weekStart = nowWeek; state.history = []; }
-  if(state.date !== nowDate){ state.date = nowDate; state.today = null; state.preview = null; }
-  return state;
+  const nowDate = todayKey(); const nowWeek = mondayOfWeek();
+  if(state.weekStart !== nowWeek){ state.weekStart = nowWeek; state.history = []; }
+  if(state.date !== nowDate){ state.date = nowDate; state.today = null; state.preview = null; }
+  return state;
 }
 
 /* ===== ТЕКСТ: поддержка абзацев через "||" ===== */
 function normalizeMultiline(s){
-  if (!s) return 'Задание';
-  s = String(s).replace(/\r\n/g,'\n');
-  s = s.split('||').map(t => t.trim()).filter(Boolean).join('\n\n');
-  s = s.replace(/\n{3,}/g, '\n\n').replace(/(\n\s*)+$/,'');
-  return s;
+  if (!s) return 'Задание';
+  s = String(s).replace(/\r\n/g,'\n');
+  s = s.split('||').map(t => t.trim()).filter(Boolean).join('\n\n');
+  s = s.replace(/\n{3,}/g, '\n\n').replace(/(\n\s*)+$/,'');
+  return s;
 }
 
-/* ===== КАРТОЧКИ (редактируешь прямо здесь). 
-   Для 2–3 абзацев используй разделитель "||". Один абзац — без "||". ===== */
+/* ===== КАРТОЧКИ (редактируешь прямо здесь). 
+   Для 2–3 абзацев используй разделитель "||". Один абзац — без "||". ===== */
 const CARDS = {
-  white: [
-    { id:'w1', text:'Белая #1 — ваш текст (часть 1)' },
-    { id:'w2', text:'Белая #2 — ваш текст (часть 1)' },
-    { id:'w3', text:'Белая #3 — ваш текст (часть 1)' },
-    { id:'w4', text:'Белая #4 — ваш текст (часть 1)' },
-    { id:'w5', text:'Белая #5 — ваш текст (часть 1)' }
-  ],
-  orange: [
-    { id:'o1', text:'Оранжевая #1 — ваш текст (часть 1) || доп. часть (опционально) || ещё одна (опционально)' },
-    { id:'o2', text:'Оранжевая #2 — ваш текст (часть 1)' },
-    { id:'o3', text:'Оранжевая #3 — ваш текст (часть 1)' },
-    { id:'o4', text:'Оранжевая #4 — ваш текст (часть 1)' },
-    { id:'o5', text:'Оранжевая #5 — ваш текст (часть 1)' }
-  ],
-  black: [
-    { id:'b1', text:'Чёрная #1 — ваш текст (часть 1)' },
-    { id:'b2', text:'Чёрная #2 — ваш текст (часть 1)' },
-    { id:'b3', text:'Чёрная #3 — ваш текст (часть 1)' },
-    { id:'b4', text:'Чёрная #4 — ваш текст (часть 1)' },
-    { id:'b5', text:'Чёрная #5 — ваш текст (часть 1)' }
-  ]
+	white: [
+		{ 
+			id:'w1', 
+			text:'Напишите друг другу своё желание на сегодня. || Каждый делает желание друг-друга. || Финал должен быть общим и удовлетворительным для обоих.' 
+		},
+		{ 
+			id:'w2', 
+			text:'Лежите без одежды друг напротив друга (на боку). || Целуйтесь и доведите друг-друга руками. || Должно быть полное чувственное слияние.' 
+		},
+		{ 
+			id:'w3', 
+			text:'Лягте друг напротив друга. || Ласкайте себя, чтобы ноги переплетались. || Фокус на зрительном контакте и синхронности.' 
+		},
+		{ 
+			id:'w4', 
+			text:'Во время секса (когда он тебя трахает) — просто без слов возьми его член в рот. || Жестко отсасывай на максимум, пока он не кончит. || Возвращайся к проникновению, чтобы завершить свой оргазм.' 
+		},
+		{ 
+			id:'w5', 
+			text:'Сегодня ты должна к нему пару раз резко подойти. || Не важно, чем он занимается или занят — ты должна подойти уже без одежды. || Заставь себя вылизать.' 
+		}
+	],
+	orange: [
+		{ 
+			id:'o1', 
+			text:'Я сажусь сверху на член и в процессе трахаю его попку пальчиками. (Аксессуары: Ошейник и тд по желанию) || когда он кончит, я не слезая дотрахаю его пальчиками, чтобы он кончил еще раз || когда он кончит - я сразу же не меняя позиции сяду ему на лицо попкой, чтобы он вылезал меня начисто, а в процессе буду очень быстро дрочить его член' 
+		},
+		{ 
+			id:'o2', 
+			text:'Я связываю ему руки, надеваю ошейник, мы включаем фильм и на протяжении всего его он должен сначала ласкать свою попку, попутно лизав меня. Я должна кончить 2 раза. || После фильма, я связываю ему руки за спиной и он трахает меня раком, а я держу его на ошейнике этим контролируя темп. || Допы: – когда кончит - опустится и вылизать меня' 
+		},
+		{ 
+			id:'o3', 
+			text:'Он лижет меня, а я трахаю его членом. (Поза 69) || Когда я чувствую насыщение — сажусь на член глубоко, он кончает в меня, я сажусь на лицо и быстро от его языка вместе со спермой кончаю.' 
+		},
+		{ 
+			id:'o4', 
+			text:'После того, как я приготовлю ужин — он должен отблагодарить меня через Куни под столом до еды. || Я говорю, что сделала вкусную еду и чтобы попробовать её - он должен попробовать меня.' 
+		},
+		{ 
+			id:'o5', 
+			text:'Я ложусь и показываю ему порно (обычно фемдом), которое мне понравилось. Когда он возбудится, я беру его член и начинаю ласкать. В этот момент лижу грудь и провожу по его попке, чуть смазываю и вхожу, но не глубоко — фокус больше на члене. Я комбинирую действия. Не даю кончить, никак, замедляюсь, останавливаюсь и что угодно. || Допы: говорю, что он моя сучка, Как бы захотелось выебать его, как бы хотелось на член, но сегодня другой план… || После надеваю на него кляп член, смазываю и сажусь на лицо так, прыгаю пока не кончу и говорю, что пока я не буду полностью мокрой — ты не кончишь. Когда я кончила, я закрываю ему глаза повязкой (не снимая кляп) и довожу его 1/2 раза до того, чтобы кончил. Допы: руки могут быть зафиксированы за спиной, или сверху, но они в моменте не должны трогать тебя.' 
+		},
+		{ 
+			id:'o6', 
+			text:'Подготовить скрытно 4 разные игрушки. Я говорю ему лечь мне на колени, отвожу член назад (за попку над моей ножкой) и смазываю попку, сначала пробую пальчики (НЕЖНО), а потом начинаю экспериментировать с разными игрушками пока его попка не станет послушной мне до конца. Я хочу, чтобы его попка принимала мои игрушки тогда когда я захочу и всегда была готова. (В этой карточке нельзя менять положение) || Доп: можно заказать анальные шарики или удивить чем-то таким. || Доп: после того, как он кончил - ты можешь сразу же воспользоваться черной карточкой.'
+		}
+	],
+	black: [
+		{ 
+			id:'b1', 
+			text:'Я говорю, что на сегодня — он мой. || Когда я иду в душ, он стоит на коленях и моет меня не вставая. || Если я захожу — он вылежит меня и после вытрет.' 
+		},
+		{ 
+			id:'b2', 
+			text:'Я говорю, что на сегодня — он мой. Ритуал: Теперь он дома всегда в ошейнике и голый. Я слежу за этим и чтобы он не снимался. (Возможно эти дни даже без камеры в зуме) || Пока я смотрю свой сериал, он должен встать на колени у кровати и сесть на член. Пока не закончится серия, он должен плавно двигаться на нем по моим приказам, а я могу ласкать себя вибратором. || Когда серия закончится — я связываю руки, надевая кляп член или обычный, ставлю раком и трахаю долго и хорошо. Я не чувствую усталости, он должен кончить минимум 3 раза.' 
+		},
+		{ 
+			id:'b3', 
+			text:'Я говорю, что на сегодня — он мой. Ритуал: Теперь он дома всегда в ошейнике и голый. Я слежу за этим и чтобы он не снимался. (Возможно эти дни даже без камеры в зуме) || Я трогаю его член какое-то время, чтобы он возбуждался и начал течь. Все, что из него выходит - я отправляю ему в ротик. После я приказываю лечь ему мне на колени на животик и выпрямить руки прямо перед собой. Член убираю назад и начинаю плавно его ласкать, попутно больше выделяя его попку. Я вставляю туда пальчики и говорю ему не шевелиться, а после член. Он должен кончить сначала от моих пальчиков - после от члена, но в этом положении. || Когда цель будет выполнена, я ставлю член на пол, закрываю глаза ему, он садится на него с связанными за спиной руками. Я беру его за волосы и жестко, властно, наслаждаясь прижимаю к своей киске, пока он не доведет меня языком. Допом: если я захочу, то после я резко не предупреждая кладу его на спину на полу, сажусь на член и прыгаю — пока мне не захочется слезть. (Заметка: тут важно не забывать, что в черной карточке — он моя вещь, я пользуюсь так, как хочу)' 
+		},
+		{ 
+			id:'b4', 
+			text:'Ритуал: подойти, взять за член и сказать снимай с себя все, сегодня ты служишь, ошейник надеваешь сама. || Вставить пробку и сказать не вынимать ее ближайшие пару часов, когда тебе захочется: Посадить на стул его, на котором дилдо, встать сзади, придушить и приказать прыгать на нем. || Доп: в течении дня ты можешь просто подойти и довести руками, просто подрочить с большим количеством смазки (подойди со спины, сразу со смазкой, сними штаны демонстративно и начни дрочить) :)' 
+		},
+		{ 
+			id:'b5', 
+			text:'Ты возбуждаешь его рукой и ртом. Ты доводишь его до оргазма, направляя его член так, чтобы он кончил прямо тебе на руку. || Ты собираешь всю сперму и, не говоря ни слова, смазываешь ею его попку. Ты ставишь его раком (или наклоняешь на подушки) и трахаешь его в анал со всей силой, используя его собственную сперму как смазку. || Допы: После анального траха ты резко меняешь позицию, садишься ему на член и прыгаешь, пока он не кончит глубоко в тебя. Сразу после этого ты пересаживаешься ему на лицо и требуешь вылизывать тебя, пока ты не будешь удовлетворена.' 
+		}
+	]
 };
 
 /* ===== DOM ===== */
@@ -253,55 +298,55 @@ let state = rollDates(loadState()); saveState(state); renderAll();
 function renderAll(){ renderNew(); renderHistory(); }
 
 function renderNew(){
-  const hasConfirmed = !!state.today;
-  const current = state.preview || state.today;
+  const hasConfirmed = !!state.today;
+  const current = state.preview || state.today;
 
-  if (hasConfirmed){
-    btnGenerate.disabled = true; btnGenerate.textContent = 'Выбрано для сегодня';
-  } else {
-    btnGenerate.disabled = false;
-    btnGenerate.textContent = state.preview ? 'Сгенерить новое задание' : 'Выбрать задание';
-  }
+  if (hasConfirmed){
+    btnGenerate.disabled = true; btnGenerate.textContent = 'Выбрано для сегодня';
+  } else {
+    btnGenerate.disabled = false;
+    btnGenerate.textContent = state.preview ? 'Сгенерить новое задание' : 'Выбрать задание';
+  }
 
-  if (current){
-    card.hidden = false;
-    const cat = current.category; const task = getTask(cat, current.taskId);
-    catBadge.className = `cat ${cat}`;
-    catBadge.querySelector('.dot').className = `dot ${cat}`;
-    catLabel.textContent = cat==='white'?'Белая':cat==='orange'?'Оранжевая':'Чёрная';
-    taskText.textContent = normalizeMultiline(task ? task.text : 'Задание');
-    badgeToday.hidden = !hasConfirmed;
-    btnConfirm.hidden = hasConfirmed || !state.preview;
-  } else { card.hidden = true; btnConfirm.hidden = true; }
+  if (current){
+    card.hidden = false;
+    const cat = current.category; const task = getTask(cat, current.taskId);
+    catBadge.className = `cat ${cat}`;
+    catBadge.querySelector('.dot').className = `dot ${cat}`;
+    catLabel.textContent = cat==='white'?'Белая':cat==='orange'?'Оранжевая':'Чёрная';
+    taskText.textContent = normalizeMultiline(task ? task.text : 'Задание');
+    badgeToday.hidden = !hasConfirmed;
+    btnConfirm.hidden = hasConfirmed || !state.preview;
+  } else { card.hidden = true; btnConfirm.hidden = true; }
 }
 
 function renderHistory(){
-  const list = [...state.history].sort((a,b)=> (a.date < b.date ? 1 : -1));
-  if (state.today){
-    const idx = list.findIndex(x=>x.date===state.date);
-    const rec = { date: state.date, category: state.today.category, taskId: state.today.taskId };
-    if (idx>=0) list[idx]=rec; else list.unshift(rec);
-  }
-  if (list.length===0){ historyList.innerHTML = `<div class="empty">Пока пусто.</div>`; return; }
-  historyList.innerHTML = list.map(entry=>{
-    const task = getTask(entry.category, entry.taskId);
-    const label = formatDowLabel(entry.date);
-    const text = normalizeMultiline(task ? task.text : 'Задание');
-    const catName = entry.category==='white'?'Белая':entry.category==='orange'?'Оранжевая':'Чёрная';
-    const dot = entry.category;
-    return `
-    <details>
-      <summary>
-        <span class="sum-left"><span class="d-dot ${dot}"></span>${label}</span>
-        <span class="sum-right"><span>${catName}</span>
-          <svg class="chevH" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M9 6l6 6-6 6" stroke="#ffd7eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </span>
-      </summary>
-      <div class="d-text">${text}</div>
-    </details>`;
-  }).join('');
+  const list = [...state.history].sort((a,b)=> (a.date < b.date ? 1 : -1));
+  if (state.today){
+    const idx = list.findIndex(x=>x.date===state.date);
+    const rec = { date: state.date, category: state.today.category, taskId: state.today.taskId };
+    if (idx>=0) list[idx]=rec; else list.unshift(rec);
+  }
+  if (list.length===0){ historyList.innerHTML = `<div class="empty">Пока пусто.</div>`; return; }
+  historyList.innerHTML = list.map(entry=>{
+    const task = getTask(entry.category, entry.taskId);
+    const label = formatDowLabel(entry.date);
+    const text = normalizeMultiline(task ? task.text : 'Задание');
+    const catName = entry.category==='white'?'Белая':entry.category==='orange'?'Оранжевая':'Чёрная';
+    const dot = entry.category;
+    return `
+    <details>
+      <summary>
+        <span class="sum-left"><span class="d-dot ${dot}"></span>${label}</span>
+        <span class="sum-right"><span>${catName}</span>
+          <svg class="chevH" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M9 6l6 6-6 6" stroke="#ffd7eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </summary>
+      <div class="d-text">${text}</div>
+    </details>`;
+  }).join('');
 }
 
 /* ===== ХЕЛПЕРЫ ===== */
@@ -315,431 +360,58 @@ tabNew.addEventListener('click', ()=>{ tabNew.setAttribute('aria-selected','true
 tabHist.addEventListener('click', ()=>{ tabNew.setAttribute('aria-selected','false'); tabHist.setAttribute('aria-selected','true'); viewNew.hidden=true; viewHist.hidden=false; });
 
 btnGenerate.addEventListener('click', ()=>{
-  if (state.today) return;
-  const category = pickCategory();
-  const task = pickTask(category) || { id:'tmp', text: 'Задание' };
-  state.preview = { category, taskId: task.id };
-  saveState(state); renderAll();
+  if (state.today) return;
+  const category = pickCategory();
+  const task = pickTask(category) || { id:'tmp', text: 'Задание' };
+  state.preview = { category, taskId: task.id };
+  saveState(state); renderAll();
 });
 
 reveal.addEventListener('click', ()=>{
-  const open = reveal.getAttribute('aria-expanded')==='true';
-  reveal.setAttribute('aria-expanded', String(!open));
-  taskText.hidden = open;
+  const open = reveal.getAttribute('aria-expanded')==='true';
+  reveal.setAttribute('aria-expanded', String(!open));
+  taskText.hidden = open;
 });
 reveal.addEventListener('keydown', (e)=>{ if(e.key===' '||e.key==='Enter'){ e.preventDefault(); reveal.click(); }});
 
 btnConfirm.addEventListener('click', ()=>{
-  if (!state.preview) return;
-  state.today = { ...state.preview };
-  const idx = state.history.findIndex(x=>x.date===state.date);
-  const rec = { date: state.date, category: state.today.category, taskId: state.today.taskId };
-  if (idx>=0) state.history[idx]=rec; else state.history.push(rec);
-  state.preview = null;
-  saveState(state); renderAll();
+  if (!state.preview) return;
+  state.today = { ...state.preview };
+  const idx = state.history.findIndex(x=>x.date===state.date);
+  const rec = { date: state.date, category: state.today.category, taskId: state.today.taskId };
+  if (idx>=0) state.history[idx]=rec; else state.history.push(rec);
+  state.preview = null;
+  saveState(state); renderAll();
 });
 
 /* Ночной авто-ресет и смена недели */
 setInterval(()=>{
-  const before = state.date + '|' + state.weekStart;
-  state = rollDates(state);
-  if (before !== state.date + '|' + state.weekStart){ saveState(state); renderAll(); }
+  const before = state.date + '|' + state.weekStart;
+  state = rollDates(state);
+  if (before !== state.date + '|' + state.weekStart){ saveState(state); renderAll(); }
 }, 60*1000);
 
 /* Быстрый сброс через URL: ?reset=1 */
 (function maybeReset(){
-  const p = new URLSearchParams(location.search);
-  if (p.get('reset') === '1'){ localStorage.removeItem(STORAGE_KEY); location.href = location.pathname + '?v=' + Date.now(); }
+  const p = new URLSearchParams(location.search);
+  if (p.get('reset') === '1'){ localStorage.removeItem(STORAGE_KEY); location.href = location.pathname + '?v=' + Date.now(); }
 })();
 
 /* Dev-панель: ?dev=1 → Сброс/Версия */
 (function devBar(){
-  const p = new URLSearchParams(location.search);
-  if (p.get('dev') !== '1') return;
-  const panel = document.querySelector('.panel'); if (!panel) return;
-  const bar = document.createElement('div');
-  bar.className = 'devbar';
-  bar.innerHTML = `
-    <button type="button" id="devReset">Сбросить данные</button>
-    <button type="button" id="devVersion">Обновить версию</button>`;
-  panel.appendChild(bar);
-  document.getElementById('devReset').onclick = ()=>{ localStorage.removeItem(STORAGE_KEY); location.reload(); };
-  document.getElementById('devVersion').onclick = ()=>{
-    const url = new URL(location.href); url.searchParams.set('v', Date.now()); location.href = url;
-  };
-})();
-</script>
-</body>
-</html>
-<!doctype html>
-<html lang="ru">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>PUSIK GAME</title>
-
-<!-- PWA -->
-<meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="mobile-web-app-capable" content="yes" />
-
-<!-- Встроенный favicon -->
-<link rel="icon" type="image/svg+xml" sizes="any"
-  href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%23ff7ab6'/%3E%3Cstop offset='1' stop-color='%23ff4fa3'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='12' ry='12' fill='url(%23g)'/%3E%3C/svg%3E" />
-
-<style>
-  :root{
-    --bg:#0f0d12; --panel:#141218; --text:#fff6fb; --muted:#ffd7eb; --border:#2a2430;
-    --pink1:#ff7ab6; --pink2:#ff4fa3;
-  }
-  *{box-sizing:border-box}
-  html,body{height:100%}
-  body{
-    margin:0; font:16px/1.5 system-ui,-apple-system,Inter,Segoe UI,Roboto,Arial,sans-serif; color:var(--text);
-    background:
-      radial-gradient(900px 600px at 80% -10%, rgba(255,122,182,.20), transparent 60%),
-      radial-gradient(800px 500px at -10% 110%, rgba(255,79,163,.18), transparent 60%),
-      var(--bg);
-    display:flex; align-items:flex-start; justify-content:center; padding:24px;
-  }
-  .app{width:100%; max-width:720px}
-
-  /* Бренд */
-  .brand{display:flex; flex-direction:column; align-items:center; gap:12px; text-align:center; margin-bottom:16px}
-  .logo{
-    width:68px;height:68px;border-radius:20px;
-    background:linear-gradient(135deg,var(--pink1),var(--pink2));
-    box-shadow:0 10px 30px rgba(255,79,163,.25), 0 6px 18px rgba(0,0,0,.35);
-    display:grid;place-items:center;color:#fff;font-weight:900;letter-spacing:.3px;
-  }
-  .logo span{font-size:12px;line-height:1.05}
-  h1{margin:0;font-size:clamp(18px,4.5vw,22px); letter-spacing:.4px}
-
-  /* Панель/кнопки */
-  .panel{
-    background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(0,0,0,.15)),var(--panel);
-    border:1px solid var(--border); border-radius:16px; padding:16px;
-    box-shadow:0 10px 30px rgba(0,0,0,.35);
-    position:relative;
-  }
-  .tabs{display:flex; gap:8px; margin-bottom:12px}
-  .tab{
-    flex:1; text-align:center; padding:10px 12px; border-radius:12px; cursor:pointer;
-    border:1px solid var(--border); background:#17131b; font-weight:800;
-  }
-  .tab[aria-selected="true"]{background:linear-gradient(135deg,var(--pink1),var(--pink2)); border-color:transparent}
-
-  button{
-    appearance:none;border:1px solid var(--border);background:#17131b;color:var(--text);
-    padding:14px 16px;border-radius:12px;cursor:pointer;font-weight:800;width:100%;
-    transition:.15s transform ease, .15s background ease, .15s opacity ease;
-  }
-  button:hover{transform:translateY(-1px)}
-  button:disabled{opacity:.6;cursor:not-allowed;transform:none}
-  .primary{background:linear-gradient(135deg,var(--pink1),var(--pink2)); border-color:transparent;}
-
-  /* Карточка */
-  .card{border:1px solid var(--border); border-radius:14px; padding:14px; background:#120f15; margin-top:12px;}
-  .card-head{display:flex; align-items:center; justify-content:space-between; gap:10px;}
-  .cat{display:inline-flex;align-items:center;gap:8px;font-weight:800;font-size:14px;
-       padding:6px 10px;border-radius:999px;border:1px solid #2a2230;}
-  .dot{width:10px;height:10px;border-radius:999px}
-  .cat.white{background:linear-gradient(180deg,#1c1820,#14121a)}
-  .cat.orange{background:linear-gradient(180deg,#25181b,#1b1316)}
-  .cat.black{background:linear-gradient(180deg,#161219,#110f14)}
-  .dot.white{background:#ffe9ff}
-  .dot.orange{background:#ffb077}
-  .dot.black{background:#ff4fa3}
-  .badge{display:inline-flex;align-items:center;gap:8px;font-size:12px;padding:6px 10px;
-         border-radius:999px;background:#19141b;border:1px solid #2a2230;color:#ffdff0;}
-
-  .reveal{
-    display:flex; align-items:center; gap:10px; cursor:pointer; margin-top:10px;
-    padding:12px; border-radius:10px;
-    background:linear-gradient(180deg,rgba(255,122,182,.06),rgba(0,0,0,.05));
-  }
-  .reveal:hover{background:linear-gradient(180deg,rgba(255,122,182,.12),rgba(0,0,0,.06))}
-  .chev{transition:transform .15s ease}
-  .reveal[aria-expanded="true"] .chev{transform:rotate(90deg)}
-
-  .task{
-    margin-top:10px;border-top:1px dashed #2a2430; padding-top:12px;
-    white-space: pre-line; /* показываем переводы строк и пустые строки */
-  }
-  .task[hidden]{display:none}
-
-  .actions{display:grid; gap:10px; margin-top:12px;}
-  .sticky-confirm{position:sticky; bottom:0; background:transparent; padding-top:8px}
-
-  /* История */
-  .history-group{margin-top:8px}
-  .week-title{font-weight:800; opacity:.85; margin:6px 4px 8px}
-  details{border:1px solid var(--border); border-radius:12px; background:#17131b; margin:8px 0; overflow:hidden}
-  summary{list-style:none; cursor:pointer; padding:12px 14px; display:flex; align-items:center; justify-content:space-between; gap:10px}
-  summary::-webkit-details-marker{display:none}
-  .sum-left{display:flex; align-items:center; gap:8px; font-weight:800}
-  .d-dot{width:8px; height:8px; border-radius:999px}
-  .d-dot.white{background:#ffe9ff} .d-dot.orange{background:#ffb077} .d-dot.black{background:#ff4fa3}
-  .sum-right{display:flex; align-items:center; gap:10px}
-  .chevH{width:16px;height:16px;opacity:.85;transition:transform .15s ease}
-  details[open] .chevH{transform:rotate(90deg)}
-  .d-text{padding:0 14px 14px; color:var(--muted); white-space:pre-line}
-  .empty{opacity:.7; padding:6px}
-
-  /* Dev-панель (?dev=1) */
-  .devbar{position:absolute; top:12px; right:12px; display:flex; gap:8px; z-index:3}
-  .devbar button{width:auto; padding:8px 10px; font-weight:800; font-size:12px;
-    border-radius:10px; border:1px solid var(--border); background:#17131b; color:var(--text);}
-  .devbar button:hover{transform:translateY(-1px)}
-</style>
-</head>
-<body>
-  <div class="app">
-    <header class="brand">
-      <div class="logo"><span>PUSIK<br/>GAME</span></div>
-      <h1>PUSIK GAME</h1>
-    </header>
-
-    <section class="panel" aria-live="polite">
-      <nav class="tabs" role="tablist">
-        <button id="tab-new"  class="tab" role="tab" aria-selected="true">Новое задание</button>
-        <button id="tab-history" class="tab" role="tab" aria-selected="false">История</button>
-      </nav>
-
-      <!-- Новое задание -->
-      <div id="view-new" role="tabpanel">
-        <button id="btnGenerate" class="primary">Выбрать задание</button>
-
-        <article id="card" class="card" hidden>
-          <div class="card-head">
-            <div class="cat" id="catBadge">
-              <span class="dot"></span>
-              <span id="catLabel">—</span>
-            </div>
-            <span id="badgeToday" class="badge" hidden>на сегодня выбрано</span>
-          </div>
-
-          <div id="reveal" class="reveal" role="button" tabindex="0" aria-expanded="false" aria-controls="taskText">
-            <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M9 6l6 6-6 6" stroke="#ffd7eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <strong>Показать / скрыть задание</strong>
-          </div>
-          <div id="taskText" class="task" hidden></div>
-
-          <div class="actions sticky-confirm">
-            <button id="btnConfirm" class="primary" hidden>Выбираю это задание</button>
-          </div>
-        </article>
-      </div>
-
-      <!-- История -->
-      <div id="view-history" role="tabpanel" hidden>
-        <div class="history-group">
-          <div class="week-title">Эта неделя</div>
-          <div id="historyList"></div>
-        </div>
-      </div>
-    </section>
-  </div>
-
-<script>
-/* ===== ДАТЫ ===== */
-const dowRU = ['ВС','ПН','ВТ','СР','ЧТ','ПТ','СБ'];
-const pad = (n)=>String(n).padStart(2,'0');
-const todayKey = ()=>{ const d=new Date(); return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`; };
-function mondayOfWeek(d=new Date()){
-  const x = new Date(d.getFullYear(), d.getMonth(), d.getDate());
-  const day = x.getDay(); const diff = (day===0? -6 : 1 - day);
-  x.setDate(x.getDate()+diff);
-  return `${x.getFullYear()}-${pad(x.getMonth()+1)}-${pad(x.getDate())}`;
-}
-function formatDowLabel(isoDate){
-  const d = new Date(isoDate+'T00:00:00'); const w = dowRU[d.getDay()];
-  return (isoDate===todayKey()) ? 'Сегодня' : w;
-}
-
-/* ===== СОСТОЯНИЕ ===== */
-const STORAGE_KEY = 'pusik_game_state_v3';
-const DEFAULT_STATE = () => ({
-  date: todayKey(),
-  weekStart: mondayOfWeek(),
-  today: null,     // подтверждённое {category, taskId}
-  preview: null,   // сгенерировано, но не подтверждено
-  history: []      // [{date, category, taskId}]
-});
-const loadState = () => { try{ return Object.assign(DEFAULT_STATE(), JSON.parse(localStorage.getItem(STORAGE_KEY)||'{}')); }catch{ return DEFAULT_STATE(); } };
-const saveState = (s)=>localStorage.setItem(STORAGE_KEY, JSON.stringify(s));
-function rollDates(state){
-  const nowDate = todayKey(); const nowWeek = mondayOfWeek();
-  if(state.weekStart !== nowWeek){ state.weekStart = nowWeek; state.history = []; }
-  if(state.date !== nowDate){ state.date = nowDate; state.today = null; state.preview = null; }
-  return state;
-}
-
-/* ===== ТЕКСТ: поддержка абзацев через "||" ===== */
-function normalizeMultiline(s){
-  if (!s) return 'Задание';
-  s = String(s).replace(/\r\n/g,'\n');
-  s = s.split('||').map(t => t.trim()).filter(Boolean).join('\n\n');
-  s = s.replace(/\n{3,}/g, '\n\n').replace(/(\n\s*)+$/,'');
-  return s;
-}
-
-/* ===== КАРТОЧКИ (редактируешь прямо здесь). 
-   Для 2–3 абзацев используй разделитель "||". Один абзац — без "||". ===== */
-const CARDS = {
-  white: [
-    { id:'w1', text:'Белая #1 — ваш текст (часть 1)' },
-    { id:'w2', text:'Белая #2 — ваш текст (часть 1)' },
-    { id:'w3', text:'Белая #3 — ваш текст (часть 1)' },
-    { id:'w4', text:'Белая #4 — ваш текст (часть 1)' },
-    { id:'w5', text:'Белая #5 — ваш текст (часть 1)' }
-  ],
-  orange: [
-    { id:'o1', text:'Оранжевая #1 — ваш текст (часть 1) || доп. часть (опционально) || ещё одна (опционально)' },
-    { id:'o2', text:'Оранжевая #2 — ваш текст (часть 1)' },
-    { id:'o3', text:'Оранжевая #3 — ваш текст (часть 1)' },
-    { id:'o4', text:'Оранжевая #4 — ваш текст (часть 1)' },
-    { id:'o5', text:'Оранжевая #5 — ваш текст (часть 1)' }
-  ],
-  black: [
-    { id:'b1', text:'Чёрная #1 — ваш текст (часть 1)' },
-    { id:'b2', text:'Чёрная #2 — ваш текст (часть 1)' },
-    { id:'b3', text:'Чёрная #3 — ваш текст (часть 1)' },
-    { id:'b4', text:'Чёрная #4 — ваш текст (часть 1)' },
-    { id:'b5', text:'Чёрная #5 — ваш текст (часть 1)' }
-  ]
-};
-
-/* ===== DOM ===== */
-const $ = (id)=>document.getElementById(id);
-const tabNew = $('tab-new'), tabHist = $('tab-history');
-const viewNew = $('view-new'), viewHist = $('view-history');
-const btnGenerate = $('btnGenerate'), btnConfirm = $('btnConfirm');
-const card = $('card'), catBadge = $('catBadge'), catLabel = $('catLabel'), badgeToday = $('badgeToday');
-const reveal = $('reveal'), taskText = $('taskText');
-const historyList = $('historyList');
-
-/* ===== РЕНДЕР ===== */
-let state = rollDates(loadState()); saveState(state); renderAll();
-
-function renderAll(){ renderNew(); renderHistory(); }
-
-function renderNew(){
-  const hasConfirmed = !!state.today;
-  const current = state.preview || state.today;
-
-  if (hasConfirmed){
-    btnGenerate.disabled = true; btnGenerate.textContent = 'Выбрано для сегодня';
-  } else {
-    btnGenerate.disabled = false;
-    btnGenerate.textContent = state.preview ? 'Сгенерить новое задание' : 'Выбрать задание';
-  }
-
-  if (current){
-    card.hidden = false;
-    const cat = current.category; const task = getTask(cat, current.taskId);
-    catBadge.className = `cat ${cat}`;
-    catBadge.querySelector('.dot').className = `dot ${cat}`;
-    catLabel.textContent = cat==='white'?'Белая':cat==='orange'?'Оранжевая':'Чёрная';
-    taskText.textContent = normalizeMultiline(task ? task.text : 'Задание');
-    badgeToday.hidden = !hasConfirmed;
-    btnConfirm.hidden = hasConfirmed || !state.preview;
-  } else { card.hidden = true; btnConfirm.hidden = true; }
-}
-
-function renderHistory(){
-  const list = [...state.history].sort((a,b)=> (a.date < b.date ? 1 : -1));
-  if (state.today){
-    const idx = list.findIndex(x=>x.date===state.date);
-    const rec = { date: state.date, category: state.today.category, taskId: state.today.taskId };
-    if (idx>=0) list[idx]=rec; else list.unshift(rec);
-  }
-  if (list.length===0){ historyList.innerHTML = `<div class="empty">Пока пусто.</div>`; return; }
-  historyList.innerHTML = list.map(entry=>{
-    const task = getTask(entry.category, entry.taskId);
-    const label = formatDowLabel(entry.date);
-    const text = normalizeMultiline(task ? task.text : 'Задание');
-    const catName = entry.category==='white'?'Белая':entry.category==='orange'?'Оранжевая':'Чёрная';
-    const dot = entry.category;
-    return `
-    <details>
-      <summary>
-        <span class="sum-left"><span class="d-dot ${dot}"></span>${label}</span>
-        <span class="sum-right"><span>${catName}</span>
-          <svg class="chevH" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M9 6l6 6-6 6" stroke="#ffd7eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </span>
-      </summary>
-      <div class="d-text">${text}</div>
-    </details>`;
-  }).join('');
-}
-
-/* ===== ХЕЛПЕРЫ ===== */
-const rnd = (arr)=>arr[Math.floor(Math.random()*arr.length)];
-function pickCategory(){ return rnd(['white','orange','black']); }
-function pickTask(category){ return rnd(CARDS[category]||[]); }
-function getTask(cat,id){ return (CARDS[cat]||[]).find(x=>x.id===id)||null; }
-
-/* ===== События ===== */
-tabNew.addEventListener('click', ()=>{ tabNew.setAttribute('aria-selected','true'); tabHist.setAttribute('aria-selected','false'); viewNew.hidden=false; viewHist.hidden=true; });
-tabHist.addEventListener('click', ()=>{ tabNew.setAttribute('aria-selected','false'); tabHist.setAttribute('aria-selected','true'); viewNew.hidden=true; viewHist.hidden=false; });
-
-btnGenerate.addEventListener('click', ()=>{
-  if (state.today) return;
-  const category = pickCategory();
-  const task = pickTask(category) || { id:'tmp', text: 'Задание' };
-  state.preview = { category, taskId: task.id };
-  saveState(state); renderAll();
-});
-
-reveal.addEventListener('click', ()=>{
-  const open = reveal.getAttribute('aria-expanded')==='true';
-  reveal.setAttribute('aria-expanded', String(!open));
-  taskText.hidden = open;
-});
-reveal.addEventListener('keydown', (e)=>{ if(e.key===' '||e.key==='Enter'){ e.preventDefault(); reveal.click(); }});
-
-btnConfirm.addEventListener('click', ()=>{
-  if (!state.preview) return;
-  state.today = { ...state.preview };
-  const idx = state.history.findIndex(x=>x.date===state.date);
-  const rec = { date: state.date, category: state.today.category, taskId: state.today.taskId };
-  if (idx>=0) state.history[idx]=rec; else state.history.push(rec);
-  state.preview = null;
-  saveState(state); renderAll();
-});
-
-/* Ночной авто-ресет и смена недели */
-setInterval(()=>{
-  const before = state.date + '|' + state.weekStart;
-  state = rollDates(state);
-  if (before !== state.date + '|' + state.weekStart){ saveState(state); renderAll(); }
-}, 60*1000);
-
-/* Быстрый сброс через URL: ?reset=1 */
-(function maybeReset(){
-  const p = new URLSearchParams(location.search);
-  if (p.get('reset') === '1'){ localStorage.removeItem(STORAGE_KEY); location.href = location.pathname + '?v=' + Date.now(); }
-})();
-
-/* Dev-панель: ?dev=1 → Сброс/Версия */
-(function devBar(){
-  const p = new URLSearchParams(location.search);
-  if (p.get('dev') !== '1') return;
-  const panel = document.querySelector('.panel'); if (!panel) return;
-  const bar = document.createElement('div');
-  bar.className = 'devbar';
-  bar.innerHTML = `
-    <button type="button" id="devReset">Сбросить данные</button>
-    <button type="button" id="devVersion">Обновить версию</button>`;
-  panel.appendChild(bar);
-  document.getElementById('devReset').onclick = ()=>{ localStorage.removeItem(STORAGE_KEY); location.reload(); };
-  document.getElementById('devVersion').onclick = ()=>{
-    const url = new URL(location.href); url.searchParams.set('v', Date.now()); location.href = url;
-  };
+  const p = new URLSearchParams(location.search);
+  if (p.get('dev') !== '1') return;
+  const panel = document.querySelector('.panel'); if (!panel) return;
+  const bar = document.createElement('div');
+  bar.className = 'devbar';
+  bar.innerHTML = `
+    <button type="button" id="devReset">Сбросить данные</button>
+    <button type="button" id="devVersion">Обновить версию</button>`;
+  panel.appendChild(bar);
+  document.getElementById('devReset').onclick = ()=>{ localStorage.removeItem(STORAGE_KEY); location.reload(); };
+  document.getElementById('devVersion').onclick = ()=>{
+    const url = new URL(location.href); url.searchParams.set('v', Date.now()); location.href = url;
+  };
 })();
 </script>
 </body>
